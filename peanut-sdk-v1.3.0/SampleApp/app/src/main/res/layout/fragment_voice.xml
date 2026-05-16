@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F5F5">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#1565C0"
+        android:padding="12dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Robot Voice Chat"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_status_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ready"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:background="#42A5F5"
+            android:padding="4dp" />
+    </LinearLayout>
+
+    <!-- Chat messages list -->
+    <ListView
+        android:id="@+id/lv_chat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@null"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
+        android:padding="8dp" />
+
+    <!-- Listening indicator -->
+    <TextView
+        android:id="@+id/tv_listening"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Listening..."
+        android:textColor="#1565C0"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:padding="6dp"
+        android:visibility="gone" />
+
+    <!-- Mic input level meter (0..100%) -->
+    <LinearLayout
+        android:id="@+id/mic_level_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="4dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mic:"
+            android:textColor="#1565C0"
+            android:textSize="12sp"
+            android:layout_marginEnd="6dp" />
+
+        <ProgressBar
+            android:id="@+id/pb_mic_level"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="12dp"
+            android:layout_weight="1"
+            android:max="100"
+            android:progress="0" />
+
+        <TextView
+            android:id="@+id/tv_mic_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="0%"
+            android:textColor="#1565C0"
+            android:textSize="12sp"
+            android:minEms="3"
+            android:gravity="end" />
+    </LinearLayout>
+
+    <!-- Mic button bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#FFFFFF"
+        android:elevation="4dp"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/btn_mic"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Hold to Speak"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+
+            <Switch
+                android:id="@+id/sw_force_offline"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Use offline voice (Vosk on-device)"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_check_voice_support"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:text="Check Voice Support"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_voice_capability"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text="Voice engine: Checking..."
+            android:textColor="#546E7A"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_voice_diagnostics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="Recognizer: checking | Network: checking | Mode: checking"
+            android:textColor="#607D8B"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Try saying: Hello"
+            android:textSize="12sp"
+            android:textColor="#757575"
+            android:gravity="center"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+
+</LinearLayout>

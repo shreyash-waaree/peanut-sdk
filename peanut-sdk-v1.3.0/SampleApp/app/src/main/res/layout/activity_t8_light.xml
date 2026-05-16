@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.keenon.peanut.sample.chassis.MotorDemo">
+
+    <LinearLayout
+        android:id="@+id/layout_multi_color"
+        android:layout_width="550dp"
+        android:layout_height="80dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="MissingConstraints">
+
+
+        <Spinner
+            android:id="@+id/spinner_led_device_multi"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical" />
+
+        <Spinner
+            android:id="@+id/spinner_led_effect"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical" />
+
+        <EditText
+            android:id="@+id/tv_led_time"
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="@string/led_effect_time"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/start_multi_color"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:text="@string/action_start" />
+    </LinearLayout>
+
+    <include layout="@layout/layout_right_scroll_log" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

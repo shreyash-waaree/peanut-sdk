@@ -1,0 +1,226 @@
+<resources>
+    <string name="app_name">Waaree Autonova</string>
+
+    <string name="position_type">Positioning mode</string>
+    <string name="position_laser">Lidar</string>
+    <string name="position_label">label</string>
+
+    <string name="demo_title_baselist">Equipment information</string>
+    <string name="demo_desc_baselist">Robot equipment list, module information, version information, mileage, etc</string>
+    <string name="demo_title_chassislist">Chassis function</string>
+    <string name="demo_desc_chassislist">Robot navigation, charging, motor control, etc</string>
+    <string name="demo_title_navigation">Navigation function</string>
+    <string name="demo_desc_navigation">Navigation control and status information</string>
+    <string name="demo_title_pilot">Navigation control</string>
+    <string name="demo_title_motor">Motor function</string>
+    <string name="demo_desc_motor">Motor unlocking control and status information</string>
+    <string name="demo_title_charger">Charging function</string>
+    <string name="demo_desc_charger">Charging control and status information</string>
+    <string name="demo_title_t8_light">T8 Light</string>
+    <string name="demo_desc_t8_light">T8 Dining plate lamp</string>
+    <string name="demo_desc_w3_door">W3 Door</string>
+    <string name="demo_desc_t3_door">T3 Door</string>
+    <string name="demo_desc_map">Map import/export</string>
+    <string name="demo_title_map">Map</string>
+
+
+    <!--navigation-->
+    <string name="auto_pilot_next">next</string>
+    <string name="auto_pilot_pause">Pause navigation</string>
+    <string name="auto_pilot">Start navigation</string>
+    <string name="auto_pilot_resume">Continue navigation</string>
+    <string name="auto_pilot_stop">Stop navigation</string>
+    <string name="auto_pilot_finish">End navigation</string>
+    <string name="auto_pilot_path">Planning path</string>
+    <string name="auto_pilot_query_dest">Get target point</string>
+    <string name="auto_pilot_target_id_title">Target point serial number</string>
+    <string name="auto_pilot_target_id">1</string>
+    <string name="auto_pilot_status_title">Navigation status</string>
+    <string name="please_input_destination">Enter target point</string>
+    <string name="please_input_speed">Please enter the navigation speed</string>
+    <string name="robot_action">Robot chassis function</string>
+    <string name="sensor_action">Robot sensor function</string>
+    <string name="emotion_action">Robot light board function</string>
+
+    <string name="auto_charge">Automatic charging</string>
+    <string name="manual_charge">Manual charging</string>
+    <string name="cancel_charge">Cancel charging</string>
+    <string name="adapter_charge">Adapter charging</string>
+
+
+
+    <string name="auto_send_power">Automatic power reporting</string>
+    <string name="auto_charge_match">Subscription charging matching times</string>
+    <string name="auto_send_location">Report positioning status</string>
+    <string name="auto_send_motor_status">Automatically report motor status</string>
+
+
+    <!--device-->
+    <string name="arm_info">ARM Info</string>
+    <string name="stm32_info">STM32 Info</string>
+    <string name="query_ip">Robot IP</string>
+    <string name="query_power">Get power</string>
+    <string name="query_location">Laser positioning</string>
+    <string name="query_params">Effective model configuration</string>
+    <string name="query_mileage">Get mileage</string>
+    <string name="query_path">Location path information</string>
+    <string name="set_robot_time">Set robot time</string>
+    <string name="set_send_report_position">Report location information</string>
+
+
+    <!--motor-->
+    <string name="motor_enable">Motor status</string>
+    <string name="motor_unlock">Unlock</string>
+    <string name="motor_lock">locking</string>
+    <string name="motor_hrc">HRC Unlock</string>
+    <string name="motor_encoder">Query motor encoder</string>
+    <string name="motor_health">Query motor health status</string>
+    <string name="motor_speed">Query motor speed</string>
+
+
+    <string name="arrival">Approximate arrival</string>
+    <string name="timeout_tip">Avoidance timeout (range: 0 ~ 300 s)</string>
+    <string name="repeat_time">Number of cycles (- 1: infinite)</string>
+    <string name="speed">Walking speed(cm/s)</string>
+    <string name="continue_nav">Continue to navigate to the next point~</string>
+    <string name="avoid_tip">Can you excuse me</string>
+    <string name="no_more_point">There is no next target point</string>
+    <string name="arrive_tip_1">Arrive at the destination, stay for %s milliseconds and automatically go to the next point</string>
+    <string name="arrive_tip_2">When you reach the destination, please click manually to continue navigation</string>
+    <string name="go_to">go to</string>
+    <string name="block_timeout_tip">Blocking timeout！</string>
+    <string name="str_content">Welcome to Qinglang robot Android SDK v</string>
+    <string name="str_init_text">SDK Init：</string>
+
+    <string name="led_effect_time">Duration in milliseconds</string>
+    <string name="action_start">start</string>
+    <string name="str_tips_1">Please enter the lighting effect time</string>
+    <string name="auto_send_cover_status">Please enter the lighting effect time</string>
+
+    <string name="str_door_1">Door1</string>
+    <string name="str_door_2">Door2</string>
+    <string name="str_door_3">Door3</string>
+    <string name="str_door_4">Door4</string>
+
+    <!-- Remote WebSocket receiver (pairs with RobotController app on phone) -->
+    <string name="receiver_title">Remote Control Receiver</string>
+    <string name="receiver_desc">Receive movement commands from phone via WebSocket (e.g. RobotController)</string>
+    <string name="receiver_label_ip">Robot IP:</string>
+    <string name="receiver_label_sdk">SDK State:</string>
+    <string name="receiver_label_server">WS Server:</string>
+    <string name="receiver_label_client">Phone Client:</string>
+    <string name="receiver_label_command">Command:</string>
+    <string name="receiver_label_log">Activity Log</string>
+    <string name="receiver_btn_start">Start Server</string>
+    <string name="receiver_btn_stop">Stop Server</string>
+
+    <!-- Supermarket promo bot (SDD) -->
+    <string name="tab_ad">Ad</string>
+    <string name="tab_voice">Voice</string>
+    <string name="tab_interest">Interest</string>
+    <string name="tab_feedback">Feedback</string>
+    <string name="tab_developer">Developer</string>
+    <string name="dev_subtab_home">Home</string>
+    <string name="dev_subtab_form">Form</string>
+    <string name="dev_subtab_voice">Voice</string>
+    <string name="dev_subtab_hardware">Hardware</string>
+    <string name="dev_subtab_camera">Camera</string>
+    <string name="dev_subtab_sensors">Sensors</string>
+    <string name="dev_subtab_yolo">YOLO</string>
+
+    <!-- YOLO tray detection tab (Developer → YOLO) -->
+    <string name="yolo_title">YOLO Tray Detection</string>
+    <string name="yolo_status_idle">Camera: idle</string>
+    <string name="yolo_status_model_failed">YOLO model failed to load — see Logcat (YoloDetectorHelper)</string>
+    <string name="yolo_toast_model_failed">YOLO model failed to load. Check assets/yolo and native libs (libyolov5 / libncnn).</string>
+    <string name="yolo_placeholder">Select mode, pick a camera, then tap Start</string>
+    <string name="yolo_start">Start</string>
+    <string name="yolo_stop">Stop</string>
+    <string name="yolo_mode_android">Android Camera</string>
+    <string name="yolo_mode_native">Keenon Native (/dev/videoN)</string>
+    <string name="yolo_tts_feedback_prompt">Thank you for trying our promotion. Please give us your feedback. Say hello if you would like to know more.</string>
+    <string name="developer_tab_hint">SDK demos, forms, voice, hardware controls, camera and live sensors — for on-robot diagnostics.</string>
+
+    <!-- Hardware controls (Developer → Hardware) -->
+    <string name="hw_title">Hardware Controls</string>
+    <string name="hw_motor_section">Robot Motion</string>
+    <string name="hw_prepare_btn">Prepare (unlock motors)</string>
+    <string name="hw_release_btn">Release (lock motors)</string>
+    <string name="hw_move_front">▲</string>
+    <string name="hw_move_back">▼</string>
+    <string name="hw_move_left">◀</string>
+    <string name="hw_move_right">▶</string>
+    <string name="hw_move_stop">■ STOP</string>
+    <string name="hw_hold_hint">Hold a direction to move. Release to stop.</string>
+    <string name="hw_sensors_section">Live Sensors</string>
+    <string name="hw_battery_label">Battery</string>
+    <string name="hw_position_label">Position</string>
+    <string name="hw_motor_state_label">Motor state</string>
+    <string name="hw_sonar_label">Sonar distance</string>
+    <string name="hw_collision_label">Collision</string>
+    <string name="hw_charge_label">Charging</string>
+    <string name="hw_imu_label">IMU</string>
+    <string name="hw_nav_label">Nav state</string>
+    <string name="hw_value_placeholder">—</string>
+    <string name="hw_open_receiver_btn">Open full Remote Receiver</string>
+    <string name="hw_sensor_warning">Prepare motors before issuing direction commands. This switches to MFG_TEST mode.</string>
+
+    <!-- Camera preview (Developer → Camera) -->
+    <string name="cam_title">Camera Preview</string>
+    <string name="cam_start">Start preview</string>
+    <string name="cam_stop">Stop preview</string>
+    <string name="cam_switch">Switch camera</string>
+    <string name="cam_status_idle">Camera: idle</string>
+    <string name="cam_status_running">Camera %1$d running</string>
+    <string name="cam_no_permission">Camera permission required.</string>
+    <string name="cam_only_one">Only one camera available on this robot.</string>
+
+    <!-- Voice tab backend IP input -->
+    <string name="voice_backend_label">Backend server (PC on same network)</string>
+    <string name="voice_backend_hint">e.g. 192.168.1.50:8080</string>
+    <string name="voice_backend_save">Save</string>
+    <string name="voice_backend_test">Test</string>
+    <string name="voice_backend_saved">Backend URL saved.</string>
+    <string name="voice_backend_saved_invalid">Please enter a valid IP or URL.</string>
+    <string name="voice_backend_reachable">Reachable ✓</string>
+    <string name="voice_backend_unreachable">Unreachable ✗</string>
+    <string name="tap_to_interact">Tap to interact</string>
+    <string name="ad_fallback_desc">Waaree Energies promotional display</string>
+    <string name="ad_waaree_brand">Waaree Energies</string>
+    <string name="ad_waaree_tagline">Solar &amp; renewable energy solutions</string>
+    <string name="voice_title">Ask about the product</string>
+    <string name="voice_status_idle">Status: Ready</string>
+    <string name="tap_to_speak">Tap to speak</string>
+    <string name="transcript_label">You said</string>
+    <string name="reply_label">Reply</string>
+    <string name="interest_title">Interest / purchase</string>
+    <string name="interest_subtitle">Tell us how to reach you</string>
+    <string name="interest_section_connection">Connection</string>
+    <string name="interest_section_your_details">Your details</string>
+    <string name="backend_url_label">Backend URL (store PC)</string>
+    <string name="backend_url_hint">e.g. 192.168.1.50:8080</string>
+    <string name="backend_url_helper">Java backend on the store PC (same host as speech if used)</string>
+    <string name="full_name_required">Full name (required)</string>
+    <string name="mobile_10_digit">Mobile 10 digits (required)</string>
+    <string name="email_optional">Email (optional)</string>
+    <string name="contact_time_label">Preferred contact time</string>
+    <string name="quantity_label">Quantity interested</string>
+    <string name="quantity_helper">Enter a number from 1 to 99</string>
+    <string name="comments_optional">Comments (optional)</string>
+    <string name="submit_interest">Submit interest</string>
+    <string name="feedback_title">Feedback</string>
+    <string name="feedback_dialog_emoji">\uD83E\uDD16</string>
+    <string name="feedback_dialog_title">How was your experience?</string>
+    <string name="feedback_dialog_subtitle">Please rate your interaction</string>
+    <string name="feedback_dialog_submit">Submit Feedback</string>
+    <string name="feedback_dialog_skip">Skip</string>
+    <string name="feedback_select_star">Please select at least one star</string>
+    <string name="rating_label">Star rating (required)</string>
+    <string name="would_buy_label">Would you buy this?</string>
+    <string name="would_buy_yes">Yes</string>
+    <string name="would_buy_maybe">Maybe</string>
+    <string name="would_buy_no">No</string>
+    <string name="comments_max_200">Comments (optional, max 200)</string>
+    <string name="submit_feedback">Submit feedback</string>
+    <string name="thank_you_check">Thank you!</string>
+</resources>

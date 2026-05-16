@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="machine_type">
+        <item>T8</item>
+        <item>T5Pro</item>
+    </string-array>
+
+    <string-array name="light_mode_old">
+        <item>关闭</item>
+        <item>常亮</item>
+        <item>呼吸</item>
+        <item>闪烁</item>
+    </string-array>
+
+    <string-array name="led_device_single">
+        <item>单色转向灯</item>
+    </string-array>
+
+    <string-array name="led_device_T8">
+        <item>Upper plate light circle</item>
+        <item>Lower dining plate light ring</item>
+    </string-array>
+
+    <string-array name="led_device_T5pro">
+        <item>左立柱彩灯</item>
+        <item>右立柱彩灯</item>
+        <item>底盘彩灯</item>
+        <item>头部彩灯</item>
+    </string-array>
+</resources>

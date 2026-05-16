@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.keenon.peanut.sample.chassis.ChargerDemo"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="88dp">
+
+
+
+    <CheckBox
+        android:id="@+id/cb_auto_charge_match"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/auto_charge_match"
+        app:layout_constraintEnd_toEndOf="@+id/btn_stop_charge"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_auto_charge"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/auto_charge"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cb_auto_charge_match" />
+
+
+    <Button
+        android:id="@+id/btn_manual_charge"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginLeft="8dp"
+        android:text="@string/manual_charge"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_auto_charge"
+        app:layout_constraintLeft_toRightOf="@+id/btn_auto_charge"
+        app:layout_constraintRight_toLeftOf="@+id/btn_stop_charge"
+        app:layout_constraintTop_toTopOf="@+id/btn_auto_charge"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+
+
+    <Button
+        android:id="@+id/btn_stop_charge"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginLeft="8dp"
+        android:text="@string/cancel_charge"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_manual_charge"
+        app:layout_constraintLeft_toRightOf="@+id/btn_manual_charge"
+        app:layout_constraintRight_toLeftOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/btn_manual_charge"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btn_adapter_charge"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/adapter_charge"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_auto_charge" />
+
+    <include layout="@layout/layout_right_scroll_log" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

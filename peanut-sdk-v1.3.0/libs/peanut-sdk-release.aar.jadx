@@ -1,0 +1,112 @@
+{
+  "projectVersion": 2,
+  "files": [
+    "peanut-sdk-release.aar"
+  ],
+  "treeExpansionsV2": [
+    "t:JResources//jni",
+    "t:JInputs"
+  ],
+  "codeData": {
+    "comments": [],
+    "renames": []
+  },
+  "openTabs": [
+    {
+      "type": "class",
+      "tabPath": "com.keenon.sdk.api.AntiFallStatusApi",
+      "subPath": "java",
+      "caret": 878,
+      "view": {
+        "x": 0,
+        "y": 104
+      },
+      "active": false,
+      "pinned": false,
+      "bookmarked": false,
+      "hidden": false,
+      "previewTab": false
+    },
+    {
+      "type": "class",
+      "tabPath": "com.keenon.sdk.api.ChargeManualApi",
+      "subPath": "java",
+      "caret": 812,
+      "view": {
+        "x": 0,
+        "y": 68
+      },
+      "active": false,
+      "pinned": false,
+      "bookmarked": false,
+      "hidden": false,
+      "previewTab": false
+    },
+    {
+      "type": "class",
+      "tabPath": "com.keenon.sdk.api.ChargeDefaultApi",
+      "subPath": "java",
+      "caret": 925,
+      "view": {
+        "x": 0,
+        "y": 122
+      },
+      "active": false,
+      "pinned": false,
+      "bookmarked": false,
+      "hidden": false,
+      "previewTab": false
+    },
+    {
+      "type": "class",
+      "tabPath": "com.keenon.sdk.api2.UpgradeActionApi",
+      "subPath": "java",
+      "caret": 0,
+      "view": {
+        "x": 0,
+        "y": 2
+      },
+      "active": false,
+      "pinned": false,
+      "bookmarked": false,
+      "hidden": false,
+      "previewTab": false
+    },
+    {
+      "type": "class",
+      "tabPath": "com.keenon.sdk.coap.BaseCoapHandler",
+      "subPath": "java",
+      "caret": 660,
+      "view": {
+        "x": 0,
+        "y": 14
+      },
+      "active": false,
+      "pinned": false,
+      "bookmarked": false,
+      "hidden": false,
+      "previewTab": false
+    },
+    {
+      "type": "class",
+      "tabPath": "com.keenon.sdk.apiProxy.DoorSwitchStatusApi",
+      "subPath": "java",
+      "caret": 84,
+      "view": {
+        "x": 0,
+        "y": 0
+      },
+      "active": true,
+      "pinned": false,
+      "bookmarked": false,
+      "hidden": false,
+      "previewTab": false
+    }
+  ],
+  "cacheDir": "C:\\Users\\shreyashahuja\\AppData\\Local\\skylot\\jadx\\cache\\projects\\peanut-sdk-release-70ee2073dcfada9684b89c9460380872",
+  "enableLiveReload": false,
+  "searchHistory": [],
+  "searchResourcesFilter": "$TEXT",
+  "searchResourcesSizeLimit": 0,
+  "pluginOptions": {}
+}

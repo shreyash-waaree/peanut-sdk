@@ -1,0 +1,4 @@
+# Copy to local.properties (do not commit local.properties).
+# Android Studio: Settings → Android SDK → copy "Android SDK Location".
+# Windows path: escape backslashes as \\ in this file.
+sdk.dir=C\:\\Users\\YOUR_USERNAME\\AppData\\Local\\Android\\Sdk

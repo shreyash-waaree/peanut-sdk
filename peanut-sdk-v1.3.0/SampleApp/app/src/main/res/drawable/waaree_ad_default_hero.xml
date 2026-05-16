@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Default Waaree Energies-style promo hero when no files present in promo/ folder. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="640dp"
+    android:viewportWidth="360"
+    android:viewportHeight="640">
+
+    <!-- Deep navy base -->
+    <path
+        android:fillColor="#0F2559"
+        android:pathData="M0,0h360v640H0z" />
+
+    <!-- Sky gradient stripe -->
+    <path
+        android:fillColor="#1E3A8A"
+        android:pathData="M0,0h360v280L0,360z" />
+    <path
+        android:fillColor="#2B52C4"
+        android:pathData="M0,0h360v180L0,220z"
+        android:fillAlpha="0.7" />
+
+    <!-- Sun -->
+    <path
+        android:fillColor="#F59E0B"
+        android:pathData="M280,90m-46,0a46,46 0 1,1 92,0a46,46 0 1,1 -92,0" />
+    <!-- Sun rays -->
+    <path
+        android:fillColor="#F59E0B"
+        android:fillAlpha="0.55"
+        android:pathData="M280,18l6,30l-12,0zM280,132l6,30l-12,0l0,-30zM348,90l-30,6l0,-12zM242,90l-30,6l0,-12zM326,44l-18,22l-9,-9zM251,119l-18,22l-9,-9zM326,136l-18,-22l-9,9zM251,61l-18,-22l-9,9z" />
+
+    <!-- Foreground ground (slight upward curve) -->
+    <path
+        android:fillColor="#163A8E"
+        android:pathData="M0,360C120,335 240,335 360,360L360,640L0,640Z" />
+
+    <!-- Solar panel grid (stylized product) -->
+    <path
+        android:fillColor="#1E3A8A"
+        android:pathData="M36,420h288v128H36z" />
+    <path
+        android:fillColor="#2B52C4"
+        android:pathData="M44,428h272v56H44zM44,492h272v48H44z" />
+    <!-- Grid lines -->
+    <path
+        android:fillColor="#0F2559"
+        android:fillAlpha="0.6"
+        android:pathData="M112,428h4v112h-4zM180,428h4v112h-4zM248,428h4v112h-4zM44,484h272v4H44z" />
+
+    <!-- Accent underline -->
+    <path
+        android:fillColor="#F59E0B"
+        android:pathData="M120,564h120v6H120z" />
+</vector>

@@ -1,0 +1,93 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.keenon.peanut.sample">
+
+    <uses-sdk tools:overrideLibrary="org.vosk" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <application
+        android:usesCleartextTraffic="true"
+        android:largeHeap="true"
+        android:requestLegacyExternalStorage="true"
+        android:name=".DemoApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="com.keenon.peanut.supermarket.SupermarketActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.Supermarket"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".KeenonApiDemoMain"
+            android:exported="false"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name=".base.BaseDemo"
+            android:label="@string/demo_title_baselist" />
+        <activity
+            android:name=".chassis.ChassisList"
+            android:label="@string/demo_title_chassislist" />
+        <activity
+            android:name=".chassis.NavigationDemo"
+            android:label="@string/demo_title_navigation" />
+        <activity
+            android:name=".chassis.NavigationActivity"
+            android:label="@string/demo_title_pilot" />
+        <activity
+            android:name=".chassis.ChargerDemo"
+            android:label="@string/demo_title_charger" />
+        <activity
+            android:name=".chassis.MotorDemo"
+            android:label="@string/demo_title_motor" />
+        <activity android:name=".util.BaseActivity"></activity>
+        <activity android:name=".chassis.T8LightDemo" />
+        <activity android:name=".chassis.DoorDemo" />
+        <activity android:name=".chassis.MapDemo" />
+        <activity android:name=".chassis.T3DoorDemo" />
+
+        <!-- Remote control: WebSocket server for D:\RobotController (and similar clients) on port 8765 -->
+        <activity
+            android:name=".receiver.ReceiverActivity"
+            android:label="@string/receiver_title" />
+        <service
+            android:name=".receiver.WebSocketServerService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <receiver
+            android:name=".receiver.BootStartReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

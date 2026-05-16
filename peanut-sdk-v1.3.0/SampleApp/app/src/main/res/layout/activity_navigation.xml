@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.keenon.peanut.sample.chassis.NavigationDemo">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#ECECE1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/text_target1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:hint="@string/please_input_destination"
+                android:inputType="number"
+                android:selectAllOnFocus="false"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/text_target2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:hint="@string/please_input_destination"
+                android:inputType="number"
+                android:selectAllOnFocus="false"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/text_target3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:hint="@string/please_input_destination"
+                android:inputType="number"
+                android:selectAllOnFocus="false"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/et_timeout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:gravity="center"
+            android:hint="@string/timeout_tip"
+            android:inputType="number"
+            android:selectAllOnFocus="false"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/et_repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:gravity="center"
+            android:hint="@string/repeat_time"
+            android:inputType="number"
+            android:selectAllOnFocus="false"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/et_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:gravity="center"
+            android:hint="@string/speed"
+            android:inputType="number"
+            android:selectAllOnFocus="false"
+            android:textSize="14sp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_arrival"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/arrival" />
+
+        <Button
+            android:id="@+id/btn_navigate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/auto_pilot" />
+    </LinearLayout>
+
+
+</LinearLayout>

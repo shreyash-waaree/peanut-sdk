@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="#1A1A2E">
+
+    <!-- Title -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/receiver_title"
+        android:textSize="20sp"
+        android:textColor="#E0E0E0"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="12dp" />
+
+    <!-- Status Card -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#16213E"
+        android:padding="12dp"
+        android:layout_marginBottom="8dp">
+
+        <!-- Robot IP -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="6dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/receiver_label_ip"
+                android:textSize="14sp"
+                android:textColor="#A0A0A0" />
+
+            <TextView
+                android:id="@+id/tv_robot_ip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="..."
+                android:textSize="14sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- SDK State -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="6dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/receiver_label_sdk"
+                android:textSize="14sp"
+                android:textColor="#A0A0A0" />
+
+            <TextView
+                android:id="@+id/tv_sdk_state"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="..."
+                android:textSize="14sp"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+        <!-- WebSocket Server Status -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="6dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/receiver_label_server"
+                android:textSize="14sp"
+                android:textColor="#A0A0A0" />
+
+            <TextView
+                android:id="@+id/tv_server_status"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Stopped"
+                android:textSize="14sp"
+                android:textColor="#FF4444" />
+        </LinearLayout>
+
+        <!-- Client Connection -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="6dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/receiver_label_client"
+                android:textSize="14sp"
+                android:textColor="#A0A0A0" />
+
+            <TextView
+                android:id="@+id/tv_client_status"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="No client"
+                android:textSize="14sp"
+                android:textColor="#888888" />
+        </LinearLayout>
+
+        <!-- Current Command -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/receiver_label_command"
+                android:textSize="14sp"
+                android:textColor="#A0A0A0" />
+
+            <TextView
+                android:id="@+id/tv_current_command"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="NONE"
+                android:textSize="16sp"
+                android:textColor="#888888"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Diagnostics Card -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#16213E"
+        android:padding="12dp"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Real-Time Diagnostics"
+            android:textSize="16sp"
+            android:textColor="#E0E0E0"
+            android:textStyle="bold"
+            android:paddingBottom="8dp" />
+
+        <!-- Sensor Strings -->
+        <TextView
+            android:id="@+id/tv_diag_battery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Battery: --"
+            android:textSize="12sp"
+            android:textColor="#A0A0A0" />
+
+        <TextView
+            android:id="@+id/tv_diag_position"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Position: --"
+            android:textSize="12sp"
+            android:textColor="#A0A0A0" />
+
+        <TextView
+            android:id="@+id/tv_diag_motor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Motor State: --"
+            android:textSize="12sp"
+            android:textColor="#A0A0A0" />
+
+        <TextView
+            android:id="@+id/tv_diag_sonar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sonar: --"
+            android:textSize="12sp"
+            android:textColor="#A0A0A0" />
+            
+        <TextView
+            android:id="@+id/tv_diag_collision"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Collision: --"
+            android:textSize="12sp"
+            android:textColor="#A0A0A0" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Topic Heartbeat"
+            android:textSize="13sp"
+            android:textColor="#E0E0E0"
+            android:textStyle="bold"
+            android:paddingTop="10dp"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tv_diag_topic_heartbeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="POS: --\nNAV: --\nSONAR: --"
+            android:textSize="11sp"
+            android:textColor="#A0A0A0"
+            android:fontFamily="monospace"
+            android:lineSpacingExtra="2dp" />
+    </LinearLayout>
+
+    <!-- Start/Stop Button -->
+    <Button
+        android:id="@+id/btn_start_stop_server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/receiver_btn_start"
+        android:textSize="16sp"
+        android:textAllCaps="true"
+        android:layout_marginBottom="8dp"
+        android:background="#0F3460"
+        android:textColor="#FFFFFF"
+        android:padding="12dp" />
+
+    <!-- Log Label -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/receiver_label_log"
+        android:textSize="13sp"
+        android:textColor="#808080"
+        android:paddingBottom="4dp" />
+
+    <!-- Log ScrollView -->
+    <ScrollView
+        android:id="@+id/sv_receiver_log"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#0D1117"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/tv_receiver_log"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:textColor="#C9D1D9"
+            android:fontFamily="monospace"
+            android:lineSpacingExtra="2dp" />
+    </ScrollView>
+
+</LinearLayout>

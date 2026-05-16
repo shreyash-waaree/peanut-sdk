@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.keenon.peanut.sample.chassis.MotorDemo">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/motor_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="18dp"
+                android:text="@string/motor_enable"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Switch
+                android:id="@+id/sw_motor_enable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="100dp"
+                android:showText="true"
+                android:textOff="@string/motor_lock"
+                android:textOn="@string/motor_unlock"
+                android:thumb="@drawable/mfg_switch_thumb_selector"
+                android:track="@drawable/mfg_switch_rectangle_track"
+                app:layout_constraintLeft_toLeftOf="@+id/motor_status"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/motor_hrc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="28dp"
+                android:text="@string/motor_hrc"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/motor_status" />
+
+            <Switch
+                android:id="@+id/sw_motor_hrc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="18dp"
+                android:paddingLeft="100dp"
+                android:showText="true"
+                android:textOff="@string/motor_lock"
+                android:textOn="@string/motor_unlock"
+                android:thumb="@drawable/mfg_switch_thumb_selector"
+                android:track="@drawable/mfg_switch_rectangle_track"
+                app:layout_constraintLeft_toLeftOf="@+id/motor_hrc"
+                app:layout_constraintTop_toBottomOf="@+id/sw_motor_enable" />
+
+            <CheckBox
+                android:id="@+id/cb_motor_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="18dp"
+                android:text="@string/auto_send_motor_status"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/motor_hrc" />
+
+            <Button
+                android:id="@+id/btn_motor_encoder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/motor_encoder"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cb_motor_status" />
+
+            <Button
+                android:id="@+id/btn_motor_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/motor_speed"
+                app:layout_constraintBottom_toBottomOf="@id/btn_motor_encoder"
+                app:layout_constraintLeft_toRightOf="@id/btn_motor_encoder"
+                app:layout_constraintTop_toTopOf="@id/btn_motor_encoder" />
+
+            <Button
+                android:id="@+id/btn_motor_health"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/motor_health"
+                app:layout_constraintBottom_toBottomOf="@id/btn_motor_speed"
+                app:layout_constraintLeft_toRightOf="@id/btn_motor_speed"
+                app:layout_constraintTop_toTopOf="@id/btn_motor_speed" />
+
+            <Button
+                android:id="@+id/btn_move_forward"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="108dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:text="↑"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_motor_encoder" />
+
+            <Button
+                android:id="@+id/btn_move_backward"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="0dp"
+                android:text="↓"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="@+id/btn_move_forward"
+                app:layout_constraintRight_toRightOf="@+id/btn_move_forward"
+                app:layout_constraintTop_toBottomOf="@+id/btn_move_forward" />
+
+            <Button
+                android:id="@+id/btn_turn_right"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:text="→"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_move_backward"
+                app:layout_constraintLeft_toRightOf="@+id/btn_move_backward"
+                app:layout_constraintTop_toTopOf="@+id/btn_move_backward"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/btn_turn_left"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="0dp"
+                android:text="←"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_move_backward"
+                app:layout_constraintRight_toLeftOf="@+id/btn_move_backward"
+                app:layout_constraintTop_toTopOf="@+id/btn_move_backward" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+ <include layout="@layout/layout_right_scroll_log" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

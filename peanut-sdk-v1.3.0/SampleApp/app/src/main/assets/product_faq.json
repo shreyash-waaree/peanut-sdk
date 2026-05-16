@@ -1,0 +1,16 @@
+{
+  "product_name": "Demo Promotional Product",
+  "triggers": [
+    {
+      "keywords": ["price", "cost", "how much"],
+      "reply": "Please see shelf labels or ask a store associate for current pricing.",
+      "navigate_to_form": false
+    },
+    {
+      "keywords": ["buy", "purchase", "order", "interested"],
+      "reply": "I can take your details on the Interest tab.",
+      "navigate_to_form": true
+    }
+  ],
+  "default_reply": "Thanks for stopping by. Use the tabs to leave feedback or your contact details."
+}

@@ -1,0 +1,10 @@
+{
+  "patrol_mode": "loop",
+  "dwell_seconds": 30,
+  "waypoints": [
+    {
+      "id": "1",
+      "label": "Promo stop 1"
+    }
+  ]
+}

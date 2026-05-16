@@ -1,0 +1,103 @@
+<resources>
+    <string name="app_name">擎朗SDK Sample</string>
+
+    <string name="position_type">定位方式</string>
+    <string name="position_laser">激光雷达</string>
+    <string name="position_label">标签</string>
+
+    <string name="demo_title_baselist">设备信息</string>
+    <string name="demo_desc_baselist">机器人设备列表、模块信息、版本信息、里程、健康状态等</string>
+    <string name="demo_title_chassislist">底盘功能</string>
+    <string name="demo_desc_chassislist">机器人导航、充电、电机控制等</string>
+    <string name="demo_title_navigation">导航功能</string>
+    <string name="demo_desc_navigation">导航控制以及状态信息</string>
+    <string name="demo_title_pilot">导航控制</string>
+    <string name="demo_title_motor">电机功能</string>
+    <string name="demo_desc_motor">电机解锁控制以及状态信息</string>
+    <string name="demo_title_charger">充电功能</string>
+    <string name="demo_desc_charger">充电控制及状态信息</string>
+    <string name="demo_title_t8_light">T8 灯光</string>
+    <string name="demo_desc_t8_light">T8 餐盘灯</string>
+    <string name="demo_desc_w3_door">W3 舱门</string>
+    <string name="demo_desc_t3_door">T3 舱门</string>
+    <string name="demo_desc_map">地图 导入导出</string>
+    <string name="demo_title_map">地图</string>
+
+
+    <!--navigation-->
+    <string name="auto_pilot_next">下一个</string>
+    <string name="auto_pilot_pause">暂停导航</string>
+    <string name="auto_pilot">开始导航</string>
+    <string name="auto_pilot_resume">继续导航</string>
+    <string name="auto_pilot_stop">停止导航</string>
+    <string name="auto_pilot_finish">结束导航</string>
+    <string name="auto_pilot_path">规划路径</string>
+    <string name="auto_pilot_query_dest">获取目标点</string>
+    <string name="auto_pilot_target_id_title">目标点序号</string>
+    <string name="auto_pilot_target_id">1</string>
+    <string name="auto_pilot_status_title">导航状态</string>
+    <string name="please_input_destination">输入目标点</string>
+    <string name="please_input_speed">请输入导航速度</string>
+    <string name="robot_action">机器人底盘功能</string>
+    <string name="sensor_action">机器人传感器功能</string>
+    <string name="emotion_action">机器人灯板功能</string>
+
+    <string name="auto_charge">自动充电</string>
+    <string name="manual_charge">手动充电</string>
+    <string name="cancel_charge">取消充电</string>
+    <string name="adapter_charge">适配器充电</string>
+
+
+    <string name="auto_send_power">自动上报电量</string>
+    <string name="auto_charge_match">订阅充电匹配次数</string>
+    <string name="auto_send_location">自动上报定位状态</string>
+    <string name="auto_send_motor_status">自动上报电机状态</string>
+
+    <!--device-->
+    <string name="arm_info">ARM板信息</string>
+    <string name="stm32_info">STM32板信息</string>
+    <string name="query_ip">查询算法板IP</string>
+    <string name="query_power">查询电量</string>
+    <string name="query_location">激光定位</string>
+    <string name="query_params">生效机型配置</string>
+    <string name="query_mileage">查询里程</string>
+    <string name="query_path">查询位置路径信息</string>
+
+    <string name="set_robot_time">设置Robot时间</string>
+    <string name="set_send_report_position">上报位置信息</string>
+
+
+    <!--motor-->
+    <string name="motor_enable">电机状态</string>
+    <string name="motor_unlock">解锁</string>
+    <string name="motor_lock">锁定</string>
+    <string name="motor_hrc">HRC解锁</string>
+    <string name="motor_encoder">查询电机编码器</string>
+    <string name="motor_health">查询电机健康状态</string>
+    <string name="motor_speed">查询电机速度</string>
+
+
+    <string name="arrival">近似到达</string>
+    <string name="timeout_tip">避让超时时间（秒；范围：0~300）</string>
+    <string name="repeat_time">循环次数(-1：无限 )</string>
+    <string name="speed">行走速度(cm/s)</string>
+    <string name="continue_nav">继续导航,前往下一点~</string>
+    <string name="avoid_tip">能不能让一下哦</string>
+    <string name="no_more_point">没有下一个目标点了</string>
+    <string name="arrive_tip_1">到达目的地，停留%s毫秒后自动前往下一点</string>
+    <string name="arrive_tip_2">到达目的地，请手动点击继续导航</string>
+    <string name="go_to">前往</string>
+    <string name="block_timeout_tip">阻挡超时了！</string>
+    <string name="str_content">欢迎使用擎朗机器人Android SDK v</string>
+    <string name="str_init_text">SDK初始化：</string>
+
+    <string name="led_effect_time">持续时间(毫秒)</string>
+    <string name="action_start">开始</string>
+    <string name="str_tips_1">请输入亮灯效果时间</string>
+
+    <string name="str_door_1">舱门1</string>
+    <string name="str_door_2">舱门2</string>
+    <string name="str_door_3">舱门3</string>
+    <string name="str_door_4">舱门4</string>
+
+</resources>

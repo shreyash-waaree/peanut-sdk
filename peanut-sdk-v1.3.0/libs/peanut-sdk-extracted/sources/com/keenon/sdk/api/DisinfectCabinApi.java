@@ -1,0 +1,62 @@
+package com.keenon.sdk.api;
+
+import com.keenon.common.constant.PeanutConstants;
+import com.keenon.common.utils.ByteUtils;
+import com.keenon.common.utils.GsonUtil;
+import com.keenon.common.utils.LogUtils;
+import com.keenon.sdk.external.IDataCallback;
+import com.keenon.sdk.hedera.model.ApiCallback;
+import com.keenon.sdk.hedera.model.ApiData;
+import com.keenon.sdk.hedera.model.ApiError;
+import com.keenon.sdk.proxy.sender.SenderManager;
+import com.keenon.sdk.proxy.sender.anno.LinkAdapter;
+import com.keenon.sdk.serial.adapter.SerialCommand;
+import com.keenon.sdk.serial.adapter.SerialParams;
+import com.keenon.sdk.serial.adapter.SerialResponse;
+import com.keenon.sdk.serial.base.SerialData;
+
+/* JADX INFO: loaded from: peanut-sdk-release.aar:classes.jar:com/keenon/sdk/api/DisinfectCabinApi.class */
+@LinkAdapter(link = PeanutConstants.LinkType.COM, com = PeanutConstants.COM2, custom = true)
+@SerialCommand(action = "52", body = "20")
+public class DisinfectCabinApi {
+    private IDataCallback callBack;
+
+    @SerialResponse
+    ApiCallback serialCallback = new ApiCallback<SerialData>() { // from class: com.keenon.sdk.api.DisinfectCabinApi.1
+        @Override // com.keenon.sdk.hedera.model.ApiCallback, com.keenon.sdk.hedera.model.ICallback
+        public void onSuccess(SerialData result) {
+            LogUtils.i(PeanutConstants.TAG_API, "[DisinfectCabinApi][onSuccess raw: " + ByteUtils.toString(result.getData()) + "]");
+            ApiData bean = new ApiData();
+            bean.setCode(0);
+            bean.setStatus(ByteUtils.bytesToInt(ByteUtils.ObjectToByte(result.getStatus()), 0));
+            String jsonResult = GsonUtil.bean2String(bean);
+            LogUtils.d(PeanutConstants.TAG_API, "[DisinfectCabinApi][onSuccess json: " + jsonResult + "]");
+            if (DisinfectCabinApi.this.callBack == null) {
+                return;
+            }
+            DisinfectCabinApi.this.callBack.success(jsonResult);
+        }
+
+        @Override // com.keenon.sdk.hedera.model.ApiCallback, com.keenon.sdk.hedera.model.ICallback
+        public void onFail(ApiError error) {
+            if (DisinfectCabinApi.this.callBack == null) {
+                return;
+            }
+            DisinfectCabinApi.this.callBack.error(error);
+        }
+    };
+    private boolean enable;
+
+    @SerialParams
+    public Byte[] SerialParams() {
+        Byte[] bArr = new Byte[1];
+        bArr[0] = Byte.valueOf((byte) (this.enable ? 1 : 0));
+        return bArr;
+    }
+
+    public void send(IDataCallback callBack, boolean enable) {
+        this.callBack = callBack;
+        this.enable = enable;
+        SenderManager.getInstance().send(this);
+    }
+}

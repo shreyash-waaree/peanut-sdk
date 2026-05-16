@@ -1,0 +1,77 @@
+Sensors / perception
+Lidar sensor (/sensor/lidar)
+Lidar plate sensor (plate lidar) + plate lidar calibration
+Anti-fall Lidar / FDL module (/sensor/fdl, plus FDL manual/cmd/status)
+IMU sensor + IMU angle + IMU reset
+Sonar sensor (/sensor/sonar)
+Depth sensor (/sensor/depth) + Depth V2 (/sensor/depth_with_type)
+Vision depth sensor (vision depth capture)
+Gazer sensor (/sensor/gazer)
+PSD sensor (/sensor/psd)
+Bump/collision sensors (/sensor/bump, bump info/status)
+Touch sensor (embedded serial touch)
+Point cloud switch (/sensor/pointCloudSwitch)
+Welcome switch (/welcome/switch)
+Dynamic object / runtime dynamic obstacles (/runtime/dynamicObstacles)
+Object perception / runtime object detection (/runtime/object)
+Camera module(s) used for auto-detection (camera capture/open/close)
+Spotlight light (used for camera detection)
+Key event sensors (SensorKeyEvent)
+Ear key event sensors (SensorEarKeyEvent)
+Door switch status sensor (embedded door switch status/fault)
+Call bell sensor (SensorCallBell)
+Notification bell sensor (SensorNotificationBell)
+Emergency button (EmergencyBtnEnable/Lock/Status)
+Charger-docking radar (referenced via PM_NO_RADAR in charger code)
+Map module (map download / TFTP-based mapping download)
+Eye lamp (eye LEDs)
+Expression controller (expression/font transmission)
+Container control (container motor control wrapper)
+STM32 anti-motor switch + STM32 robot mode (STM32 state)
+OTA update module (SensorOTA)
+Self-diagnosis module (SensorDiagnosis)
+Calibration module (SensorCalibration)
+SCM reboot / STM32 reboot sensor (SensorScmReBoot)
+Steering motor (steering motor sensing/events)
+Head motor (head motor state/events)
+Jacking mechanism (jacking state/control)
+Actuators / robot mechanisms
+Main drive motor control (motor speed/status/enable/manual)
+Charging system (charger logic + charging pile/docking flow)
+Doors (open/close + door lock/status/fault; multiple door types)
+Door fan (door-side fan open/close)
+Disinfection system:
+UV lamp
+Atomizer
+Disinfect fan
+Disinfect cabin
+Drainage
+Liquid
+Disinfect status
+KC01 assembly / components:
+Side brush
+Roller brush
+Dust push
+Disinfection lamp
+Fan gear
+Light switch
+Motor move
+Motor lock
+KC01 STM32 motor
+KC01 arm update
+KC01 light play (light effects)
+SCM container motor (SCMContainerMotorApi)
+Control boards (OTA “device targets” referenced)
+Robot arm
+STM32
+Motor
+Eye board / eye (eye lamp)
+Gazer
+Lidar front / Lidar back
+Vision left / right / single
+Door board + Door T3
+KC01 emotion
+Light board T9PRO
+Peripheral control board (C40 peripheral ctrl)
+Expansion board
+Word bank

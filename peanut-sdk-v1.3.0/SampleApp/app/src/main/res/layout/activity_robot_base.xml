@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.keenon.peanut.sample.base.BaseDemo">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_arm_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/arm_info"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <Button
+                android:id="@+id/btn_stm32_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/stm32_info"
+                app:layout_constraintBottom_toBottomOf="@id/btn_arm_info"
+                app:layout_constraintLeft_toRightOf="@id/btn_arm_info"
+                app:layout_constraintTop_toTopOf="@id/btn_arm_info" />
+
+            <Button
+                android:id="@+id/btn_query_ip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/query_ip"
+                app:layout_constraintBottom_toBottomOf="@id/btn_stm32_version"
+                app:layout_constraintLeft_toRightOf="@id/btn_stm32_version"
+                app:layout_constraintTop_toTopOf="@id/btn_stm32_version" />
+
+            <Button
+                android:id="@+id/btn_query_all_dest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/auto_pilot_query_dest"
+                app:layout_constraintBottom_toBottomOf="@id/btn_query_ip"
+                app:layout_constraintLeft_toRightOf="@id/btn_query_ip"
+                app:layout_constraintTop_toTopOf="@id/btn_query_ip" />
+
+            <Button
+                android:id="@+id/btn_query_power"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/query_power"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_query_all_dest"  />
+
+            <Button
+                android:id="@+id/btn_query_mileage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/query_mileage"
+                app:layout_constraintBottom_toBottomOf="@id/btn_query_power"
+                app:layout_constraintLeft_toRightOf="@id/btn_query_power"
+                app:layout_constraintTop_toTopOf="@id/btn_query_power" />
+
+            <Button
+                android:id="@+id/btn_query_path"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/query_path"
+                app:layout_constraintBottom_toBottomOf="@id/btn_query_mileage"
+                app:layout_constraintLeft_toRightOf="@id/btn_query_mileage"
+                app:layout_constraintTop_toTopOf="@id/btn_query_mileage" />
+
+            <Button
+                android:id="@+id/btn_slam_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/query_location"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_query_power"  />
+
+            <Button
+                android:id="@+id/btn_sync_params"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/query_params"
+                app:layout_constraintBottom_toBottomOf="@id/btn_slam_location"
+                app:layout_constraintLeft_toRightOf="@id/btn_slam_location"
+                app:layout_constraintTop_toTopOf="@id/btn_slam_location" />
+            <Button
+                android:id="@+id/btn_sync_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/set_robot_time"
+                app:layout_constraintBottom_toBottomOf="@id/btn_sync_params"
+                app:layout_constraintLeft_toRightOf="@id/btn_sync_params"
+                app:layout_constraintTop_toTopOf="@id/btn_sync_params" />
+
+
+            <CheckBox
+                android:id="@+id/cb_location_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/auto_send_location"
+                app:layout_constraintBottom_toBottomOf="@id/btn_sync_time"
+                app:layout_constraintLeft_toRightOf="@id/btn_sync_time"
+                app:layout_constraintTop_toTopOf="@id/btn_sync_time"/>
+
+          <CheckBox
+                android:id="@+id/cb_navigation_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/set_send_report_position"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_slam_location" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+  <include layout="@layout/layout_right_scroll_log" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

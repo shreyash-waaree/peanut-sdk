@@ -1,0 +1,50 @@
+package com.keenon.sdk.config;
+
+/* JADX INFO: loaded from: peanut-sdk-release.aar:classes.jar:com/keenon/sdk/config/PropertiesKey.class */
+public class PropertiesKey {
+    public static final String APP_ROBOT_LINK_TYPE = "app.robot.link.type";
+    public static final String APP_ROBOT_LINK_COM = "app.robot.link.com";
+    public static final String APP_ROBOT_LINK_IP = "app.robot.link.ip";
+    public static final String APP_ROBOT_LINK_PORT = "app.robot.link.port";
+    public static final String APP_EMOTION_LINK_COM = "app.emotion.link.com";
+    public static final String APP_DOOR_LINK_COM = "app.door.link.com";
+    public static final String APP_LOCK_DOCK_TARGET_STATUS = "app.lock.dock.target.status";
+    public static final String APP_BIZ_SFD_SPEED = "app.biz.sfd.speed";
+    public static final String APP_BIZ_SSD_SPEED = "app.biz.ssd.speed";
+    public static final String APP_HEAD_TOUCH_ENABLE = "app.head.touch.enable";
+    public static final String APP_BIZ_SFD_HEAD_TOUCH_STATUS = "app.biz.sfd.head.touch.status";
+    public static final String APP_BIZ_SSD_HEAD_TOUCH_STATUS = "app.biz.ssd.head.touch.status";
+    public static final String APP_AUDIO_BG_STATUS = "app.audio.bg.status";
+    public static final String APP_LOCK_PAUSE_STATUS = "app.lock.pause.status";
+    public static final String APP_AUDIO_WELCOME_STATUS = "app.audio.welcome.status";
+    public static final String APP_EXPRESS_ENABLE = "app.express.enable";
+    public static final String APP_PALLET_ENABLE = "app.pallet.enable";
+    public static final String APP_PALLET_NUM = "app.pallet.num";
+    public static final String APP_JERK_ENABLE = "app.jerk.enable";
+    public static final String APP_HRC_ENABLE = "app.hrc.enable";
+    public static final String MACHINE_LOCATION_TYPE = "machine.location.type";
+    public static final String MACHINE_TYPE = "machine.type";
+    public static final String APP_DOCK_ORIGIN_ENABLE = "app.dock.origin.lock.status";
+    public static final String APP_SELECT_VOICE_PLAY_ENABLE = "app.select.voice.play.enable";
+    public static final String ROBOT_TYPE = "robot.type";
+    public static final String ROBOT_LIDAR_TYPE = "robot.lidar.type";
+    public static final String ROBOT_MAX_SPEED = "robot.max.speed.boundary";
+    public static final String ROBOT_PATH_TYPE = "robot.path.type";
+    public static final String ROBOT_RADIUS = "robot.radius";
+    public static final String ROBOT_LOG_LEVEL = "robot.log.level";
+    public static final String ROBOT_LIDAR_FILTER_ENABLE = "robot.lidar.filter.enable";
+    public static final String ROBOT_IMU_ENABLE = "robot.imu.enable";
+    public static final String ROBOT_COREDUMP_ENABLE = "robot.coredump.enable";
+    public static final String RSM = "robot.schedule.enable";
+    public static final String RLN = "robot.gazer.limit.number";
+    public static final String RLS = "robot.gazer.limit.size";
+    public static final String RSH = "robot.schedule.wireless.mode";
+    public static final String RSI = "robot.schedule.server.ip";
+    public static final String RSO = "robot.schedule.origin.all";
+    public static final String RSOH = "robot.schedule.origin.priority";
+    public static final String RSS = "robot.schedule.origin.number";
+    public static final String RSC = "robot.schedule.origin.channel";
+    public static final String RDT = "robot.depth.type";
+    public static final String RDN = "robot.depth.number";
+    public static final String ROBOT_DOOR_NUM = "robot.door.num";
+}

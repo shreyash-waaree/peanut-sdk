@@ -1,0 +1,134 @@
+apply plugin: 'com.android.application'
+
+// Application id must stay com.keenon.peanut.sample (robot / OEM expectations, reinstall path).
+def REQUIRED_SAMPLE_APPLICATION_ID = 'com.keenon.peanut.sample'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+    // Match-strip task to an NDK actually installed (AGP otherwise pins NDK 21.x)
+    ndkVersion "27.1.12297006"
+
+    defaultConfig {
+        applicationId REQUIRED_SAMPLE_APPLICATION_ID
+        // TFLite Task Vision requires API 21+. Keenon robot hardware ships with Android 9, so safe.
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        release {
+        }
+    }
+    loadSigningConfig()
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java']
+            res.srcDirs = ['src/main/res']
+            assets.srcDirs = ['src/main/assets']
+            jniLibs.srcDirs = ['src/main/jniLibs', 'libs']
+        }
+    }
+
+    // Keep model binaries uncompressed so they can be mmapped at runtime
+    // (Vosk: .mdl/.fst/.far, TFLite: .tflite).
+    aaptOptions {
+        noCompress 'mdl', 'fst', 'far', 'tflite', 'param', 'bin'
+    }
+
+    packagingOptions {
+        pickFirst 'about.html'
+        pickFirst 'edl-v10.html'
+        pickFirst 'epl-v10.html'
+        pickFirst 'notice.html'
+        pickFirst 'META-INF/legal/LICENSE'
+        pickFirst 'META-INF/legal/NOTICE.md'
+        pickFirst 'META-INF/legal/3rd-party/cc0-legalcode.html'
+        pickFirst 'META-INF/legal/3rd-party/BSD-3-Clause-LICENSE.txt'
+        pickFirst 'META-INF/legal/3rd-party/APACHE-LICENSE-2.0.txt'
+        pickFirst 'META-INF/legal/3rd-party/MIT-license.html'
+        pickFirst 'META-INF/legal/3rd-party/CDDL+GPL-1.1.txt'
+    }
+}
+
+gradle.projectsEvaluated {
+    def appId = android.defaultConfig.applicationId
+    if (appId != REQUIRED_SAMPLE_APPLICATION_ID) {
+        throw new GradleException(
+                "Sample app applicationId must remain '${REQUIRED_SAMPLE_APPLICATION_ID}' (was '${appId}').")
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'org.slf4j:slf4j-api:1.7.25'
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.0'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.fragment:fragment:1.2.5'
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    implementation 'com.alibaba:fastjson:1.2.68'
+    implementation "androidx.multidex:multidex:2.0.1"
+    // 0.3.47+ pulls JNA as AAR (android-arm libjnidispatch.so). Newer models (e.g. en-in-0.5) need a recent libvosk — use latest 0.3.x.
+    implementation 'com.alphacephei:vosk-android:0.3.70'
+    // WebSocket server for remote phone control (ReceiverActivity / RobotController)
+    implementation 'org.java-websocket:Java-WebSocket:1.5.3'
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+
+    implementation 'com.umeng.umsdk:common:9.4.0'
+    implementation 'com.umeng.umsdk:asms:1.2.3'
+
+    // On-device object detection for tray/item recognition.
+    // We use the base TFLite interpreter (not Task Vision) because Task Vision's
+    // libtask_vision_jni.so references __aeabi_memcpy which isn't exported on the
+    // Keenon's legacy ARM32 ROM. The base tensorflow-lite .so has a different, older
+    // build toolchain and loads cleanly there.
+    // Bundled COCO model in assets/models/ (see assets/models/README.md).
+    implementation 'org.tensorflow:tensorflow-lite:2.8.0'
+    implementation 'org.tensorflow:tensorflow-lite-support:0.3.1'
+
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
+}
+
+def loadSigningConfig() {
+    Properties props = new Properties()
+    def propFile = file('../signing.properties')
+    if (propFile.canRead()) {
+        props.load(new FileInputStream(propFile))
+        if (props != null && props.containsKey('RELEASE_STORE_FILE') && props.containsKey('RELEASE_STORE_PASSWORD') &&
+                props.containsKey('RELEASE_KEY_ALIAS') && props.containsKey('RELEASE_KEY_PASSWORD')) {
+            android.signingConfigs.release.storeFile = file(props['RELEASE_STORE_FILE'])
+            android.signingConfigs.release.storePassword = props['RELEASE_STORE_PASSWORD']
+            android.signingConfigs.release.keyAlias = props['RELEASE_KEY_ALIAS']
+            android.signingConfigs.release.keyPassword = props['RELEASE_KEY_PASSWORD']
+        } else {
+            android.buildTypes.release.signingConfig = null
+        }
+    } else {
+        android.buildTypes.release.signingConfig = null
+    }
+    return null
+}
