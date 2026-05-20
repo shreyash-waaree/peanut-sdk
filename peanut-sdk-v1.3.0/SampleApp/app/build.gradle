@@ -7,7 +7,9 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
     // Match-strip task to an NDK actually installed (AGP otherwise pins NDK 21.x)
-    ndkVersion "27.1.12297006"
+    // Reverted from 27.1.12297006 → 26.3.11579264 (already installed locally; the 27.x
+    // download repeatedly failed with "Not in GZIP format" via Android Studio SDK Manager).
+    ndkVersion "26.3.11579264"
 
     defaultConfig {
         applicationId REQUIRED_SAMPLE_APPLICATION_ID
@@ -67,6 +69,14 @@ android {
         pickFirst 'META-INF/legal/3rd-party/APACHE-LICENSE-2.0.txt'
         pickFirst 'META-INF/legal/3rd-party/MIT-license.html'
         pickFirst 'META-INF/legal/3rd-party/CDDL+GPL-1.1.txt'
+        // OpenCV: keep the senior's existing libopencv_java4.so from jniLibs (proven to work
+        // with the NCNN YOLO pipeline). The QuickBird OpenCV AAR bundles its own copy of the
+        // same .so — pickFirst makes AGP take whichever it encounters first (local jniLibs
+        // wins), so we use one consistent native lib across both YOLO and TrayCountingHelper.
+        pickFirst 'lib/armeabi-v7a/libopencv_java4.so'
+        pickFirst 'lib/arm64-v8a/libopencv_java4.so'
+        pickFirst 'lib/x86/libopencv_java4.so'
+        pickFirst 'lib/x86_64/libopencv_java4.so'
     }
 }
 
@@ -108,6 +118,13 @@ dependencies {
     // Bundled COCO model in assets/models/ (see assets/models/README.md).
     implementation 'org.tensorflow:tensorflow-lite:2.8.0'
     implementation 'org.tensorflow:tensorflow-lite-support:0.3.1'
+
+    // OpenCV Java bindings for TrayCountingHelper (classical background-subtraction +
+    // contour count on tray cameras 0/1/2). The native libopencv_java4.so is ALREADY
+    // bundled in src/main/jniLibs/ for the NCNN YOLO pipeline; pickFirst in
+    // packagingOptions above ensures we keep that single copy. This dep only contributes
+    // the Java classes (org.opencv.*).
+    implementation 'com.quickbirdstudios:opencv:4.5.3.0'
 
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'

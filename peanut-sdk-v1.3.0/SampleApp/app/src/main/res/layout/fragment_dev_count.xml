@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#111318"
+    android:padding="12dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/count_title"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/count_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="@string/cam_status_idle"
+        android:textColor="#B0FFFFFF"
+        android:textSize="13sp" />
+
+    <FrameLayout
+        android:id="@+id/count_preview_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"
+        android:background="#000000">
+
+        <!-- TextureView: RK3288 delivers NV21 preview callbacks with setPreviewTexture (RobotCameraStreamer pattern). -->
+        <TextureView
+            android:id="@+id/count_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/count_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Tap Start then pick a tray camera below"
+            android:textColor="#88FFFFFF"
+            android:textSize="14sp" />
+
+        <!-- Big prominent count number in the top-right corner -->
+        <TextView
+            android:id="@+id/count_big_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_margin="12dp"
+            android:background="#CC000000"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="--"
+            android:textColor="#FFF59E0B"
+            android:textSize="48sp"
+            android:textStyle="bold" />
+
+        <!-- Secondary status line at the bottom (events / errors) -->
+        <TextView
+            android:id="@+id/count_status_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_margin="8dp"
+            android:background="#99000000"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:text=""
+            android:textColor="#FFFFFFFF"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+        <!-- Orange border showing the active detection ROI zone -->
+        <View
+            android:id="@+id/count_roi_border"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/yolo_roi_border"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <!-- Tray circle tuning — mirrors KeenonDiner KNPlateFilter circle(324.9, 229.22, 265) -->
+    <LinearLayout
+        android:id="@+id/count_roi_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:background="#1A3A5A"
+        android:padding="8dp"
+        android:visibility="gone">
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <TextView android:layout_width="64dp" android:layout_height="wrap_content" android:text="Centre X" android:textColor="#FFFFFF" android:textSize="12sp"/>
+            <SeekBar android:id="@+id/seek_roi_left" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:max="100"/>
+            <TextView android:id="@+id/txt_roi_left" android:layout_width="48dp" android:layout_height="wrap_content" android:text="CX 50%" android:textColor="#FFF59E0B" android:textSize="12sp" android:gravity="end"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="4dp">
+            <TextView android:layout_width="64dp" android:layout_height="wrap_content" android:text="Centre Y" android:textColor="#FFFFFF" android:textSize="12sp"/>
+            <SeekBar android:id="@+id/seek_roi_top" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:max="100"/>
+            <TextView android:id="@+id/txt_roi_top" android:layout_width="48dp" android:layout_height="wrap_content" android:text="CY 47%" android:textColor="#FFF59E0B" android:textSize="12sp" android:gravity="end"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="4dp">
+            <TextView android:layout_width="64dp" android:layout_height="wrap_content" android:text="Radius" android:textColor="#FFFFFF" android:textSize="12sp"/>
+            <SeekBar android:id="@+id/seek_roi_right" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:max="60"/>
+            <TextView android:id="@+id/txt_roi_right" android:layout_width="48dp" android:layout_height="wrap_content" android:text="R 41%" android:textColor="#FFF59E0B" android:textSize="12sp" android:gravity="end"/>
+        </LinearLayout>
+
+        <!-- Sensitivity = YOLO confidence threshold (10% = catches dark items, 90% = strict plates only) -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="4dp">
+            <TextView android:layout_width="64dp" android:layout_height="wrap_content" android:text="Sensitiv." android:textColor="#FFFFFF" android:textSize="12sp"/>
+            <SeekBar android:id="@+id/seek_roi_bottom" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:max="80"/>
+            <TextView android:id="@+id/txt_roi_bottom" android:layout_width="48dp" android:layout_height="wrap_content" android:text="0.40" android:textColor="#FFF59E0B" android:textSize="12sp" android:gravity="end"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_roi_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Adjust circle to match the tray disc. Orange box = detection zone. Default matches KeenonDiner production values."
+            android:textColor="#88FFFFFF"
+            android:textSize="11sp"/>
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/count_index_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/btn_count_start"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cam_start" />
+
+        <Button
+            android:id="@+id/btn_count_stop"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="6dp"
+            android:enabled="false"
+            android:text="@string/cam_stop" />
+
+        <Button
+            android:id="@+id/btn_count_crop"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="6dp"
+            android:text="CIRCLE" />
+
+        <Button
+            android:id="@+id/btn_count_logs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="6dp"
+            android:text="LOGS" />
+    </LinearLayout>
+
+    <!-- Live detection logs panel (toggled by LOGS button) -->
+    <ScrollView
+        android:id="@+id/count_logs_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_marginTop="8dp"
+        android:background="#0A1626"
+        android:padding="6dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/count_logs_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:text=""
+            android:textColor="#A0E0FF"
+            android:textSize="10sp" />
+    </ScrollView>
+</LinearLayout>

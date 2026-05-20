@@ -48,7 +48,8 @@ public class DeveloperFragment extends Fragment {
       getString(R.string.dev_subtab_hardware),
       getString(R.string.dev_subtab_camera),
       getString(R.string.dev_subtab_sensors),
-      getString(R.string.dev_subtab_yolo)
+      getString(R.string.dev_subtab_yolo),
+      getString(R.string.dev_subtab_count)
     };
     new TabLayoutMediator(tabLayout, pager, (tab, position) -> tab.setText(titles[position]))
         .attach();

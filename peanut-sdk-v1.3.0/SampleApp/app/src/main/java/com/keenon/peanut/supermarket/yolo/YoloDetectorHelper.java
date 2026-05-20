@@ -38,8 +38,9 @@ public final class YoloDetectorHelper {
     // ---- Tray model (KeenonDiner canpan_detection) ----
     private static final String TRAY_PARAM_ASSET = "yolo/canpan_detection_v1.1.5-0-g0000000.param";
     private static final String TRAY_BIN_ASSET   = "yolo/canpan_detection_v1.1.5-0-g0000000.bin";
-    private static final int    TRAY_MODEL_TYPE  = 27;  // KNYoloManager internal slot
-    private static final int    TRAY_MODEL_SIZE  = 28;
+    /** KeenonDiner {@code KNModelEnum.YOLO_MODEL_PLATE} — must match production slot 0. */
+    private static final int    TRAY_MODEL_TYPE  = 0;
+    private static final int    TRAY_MODEL_SIZE  = 5;
     private static final double TRAY_CONF_THRESH = 0.55;
     private static final String[] TRAY_LABELS    = {"ros_empty", "plate"};
 
@@ -115,18 +116,33 @@ public final class YoloDetectorHelper {
         if (initialized) return true;
         if (initFailed)  return false;
         try {
-            String paramAsset = (currentMode == Mode.COCO) ? COCO_PARAM_ASSET : TRAY_PARAM_ASSET;
-            String binAsset   = (currentMode == Mode.COCO) ? COCO_BIN_ASSET   : TRAY_BIN_ASSET;
-            int modelType     = (currentMode == Mode.COCO) ? COCO_MODEL_TYPE   : TRAY_MODEL_TYPE;
-            int modelSize     = (currentMode == Mode.COCO) ? COCO_MODEL_SIZE   : TRAY_MODEL_SIZE;
+            if (currentMode == Mode.TRAY) {
+                if (!CanpanSharedNativeModel.acquire(appContext)) {
+                    initFailed = true;
+                    return false;
+                }
+                executor  = CanpanSharedNativeModel.getExecutor();
+                paramPath = CanpanSharedNativeModel.getParamPath();
+                binPath   = CanpanSharedNativeModel.getBinPath();
+                initialized = true;
+                Log.i(TAG, "NCNN YOLOv5 ready [TRAY] — shared canpan — " + paramPath);
+                return true;
+            }
+
+            String paramAsset = COCO_PARAM_ASSET;
+            String binAsset   = COCO_BIN_ASSET;
+            int modelType     = COCO_MODEL_TYPE;
+            int modelSize     = COCO_MODEL_SIZE;
 
             paramPath = copyAssetToFiles(paramAsset);
             binPath   = copyAssetToFiles(binAsset);
-            executor  = new KNYoloExecutor();
-            executor.init(modelSize);
-            executor.initModel(modelType, paramPath, binPath);
+            synchronized (NcnnGate.LOCK) {
+                executor = new KNYoloExecutor();
+                executor.init(modelSize);
+                executor.initModel(modelType, paramPath, binPath);
+            }
             initialized = true;
-            Log.i(TAG, "NCNN YOLOv5 ready [" + currentMode + "] — " + paramPath);
+            Log.i(TAG, "NCNN YOLOv5 ready [COCO] — " + paramPath);
             return true;
         } catch (Throwable t) {
             Log.e(TAG, "ensureLoaded failed [" + currentMode + "]", t);
@@ -185,12 +201,15 @@ public final class YoloDetectorHelper {
         String[] labels = (currentMode == Mode.COCO) ? COCO_LABELS      : TRAY_LABELS;
 
         try {
-            KNBox[] boxes = executor.detectData(
-                    modelType, canonicalJpeg, canonicalJpeg.length,
-                    confThr,
-                    paramPath, binPath,
-                    inputTag, INPUT_ID, EXTRACT_TAG,
-                    srcWidth, srcHeight, MODEL_W, modelH);
+            KNBox[] boxes;
+            synchronized (NcnnGate.LOCK) {
+                boxes = executor.detectData(
+                        modelType, canonicalJpeg, canonicalJpeg.length,
+                        confThr,
+                        paramPath, binPath,
+                        inputTag, INPUT_ID, EXTRACT_TAG,
+                        srcWidth, srcHeight, MODEL_W, modelH);
+            }
 
             if (boxes == null || boxes.length == 0) return Collections.emptyList();
 
@@ -213,11 +232,20 @@ public final class YoloDetectorHelper {
     }
 
     public synchronized void close() {
-        if (initialized && executor != null) {
-            try { executor.destroyModel(); } catch (Throwable ignored) {}
-            executor = null;
-            initialized = false;
+        if (!initialized || executor == null) {
+            return;
         }
+        if (currentMode == Mode.TRAY) {
+            CanpanSharedNativeModel.release();
+        } else {
+            try {
+                synchronized (NcnnGate.LOCK) {
+                    executor.destroyModel();
+                }
+            } catch (Throwable ignored) {}
+        }
+        executor = null;
+        initialized = false;
     }
 
     // ---- Asset → internal storage copy ----

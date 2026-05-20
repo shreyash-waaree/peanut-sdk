@@ -127,6 +127,8 @@
     <string name="dev_subtab_camera">Camera</string>
     <string name="dev_subtab_sensors">Sensors</string>
     <string name="dev_subtab_yolo">YOLO</string>
+    <string name="dev_subtab_count">Count</string>
+    <string name="count_title">Tray Count (OpenCV)</string>
 
     <!-- YOLO tray detection tab (Developer → YOLO) -->
     <string name="yolo_title">YOLO Tray Detection</string>

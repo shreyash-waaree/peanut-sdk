@@ -1,0 +1,314 @@
+﻿05-20 14:18:12.479  1889  2517 F libc    : Fatal signal 11 (SIGSEGV), code 1, fault addr 0x0 in tid 2517 (TrayCount)
+
+05-20 14:18:12.618   204   204 F DEBUG   : *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+
+05-20 14:18:12.618   204   204 F DEBUG   : Build fingerprint: 'Android/rk3288/rk3288:6.0.1/MXC89K/builder04291124:userdebug/test-keys'
+
+05-20 14:18:12.618   204   204 F DEBUG   : Revision: '0'
+
+05-20 14:18:12.618   204   204 F DEBUG   : ABI: 'arm'
+
+05-20 14:18:12.618   204   204 F DEBUG   : pid: 1889, tid: 2517, name: TrayCount  >>> com.keenon.peanut.sample <<<
+
+05-20 14:18:12.618   204   204 F DEBUG   : signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0
+
+05-20 14:18:12.650   204   204 F DEBUG   :     r0 00000000  r1 9793f254  r2 01010000  r3 00000001
+
+05-20 14:18:12.650   204   204 F DEBUG   :     r4 ffffffff  r5 b6cdbe40  r6 98630654  r7 9793ebb8
+
+05-20 14:18:12.650   204   204 F DEBUG   :     r8 9793f254  r9 b82ba1a0  sl 00010000  fp 00000000
+
+05-20 14:18:12.650   204   204 F DEBUG   :     ip 9862e350  sp 9793eb90  lr 97dd9f45  pc 97e66832  cpsr 200b0030
+
+05-20 14:18:12.893   204   204 F DEBUG   : 
+
+05-20 14:18:12.893   204   204 F DEBUG   : backtrace:
+
+05-20 14:18:12.893   204   204 F DEBUG   :     #00 pc 001cb832  /data/app/com.keenon.peanut.sample-1/lib/arm/libopencv_java4.so (_ZNK2cv11_InputArray4typeEi+73)
+
+05-20 14:18:12.893   204   204 F DEBUG   :     #01 pc 0013ef41  /data/app/com.keenon.peanut.sample-1/lib/arm/libopencv_java4.so
+
+05-20 14:18:12.894   204   204 F DEBUG   :     #02 pc 0013ff25  /data/app/com.keenon.peanut.sample-1/lib/arm/libopencv_java4.so (_ZN2cv6divideEdRKNS_11_InputArrayERKNS_12_OutputArrayEi+80)
+
+05-20 14:18:12.894   204   204 F DEBUG   :     #03 pc 000dbc57  /data/app/com.keenon.peanut.sample-1/lib/arm/libopencv_java4.so (Java_org_opencv_core_Core_divide_17+66)
+
+05-20 14:18:12.894   204   204 F DEBUG   :     #04 pc 017f07ab  /data/app/com.keenon.peanut.sample-1/oat/arm/base.odex (offset 0xfc3000) (void org.opencv.core.Core.divide_7(long, double, double, double, double, long)+182)
+
+05-20 14:18:12.894   204   204 F DEBUG   :     #05 pc 017efbe5  /data/app/com.keenon.peanut.sample-1/oat/arm/base.odex (offset 0xfc3000) (void org.opencv.core.Core.divide(org.opencv.core.Mat, org.opencv.core.Scalar, org.opencv.core.Mat)+456)
+
+05-20 14:18:12.894   204   204 F DEBUG   :     #06 pc 02317f21  /data/app/com.keenon.peanut.sample-1/oat/arm/base.odex (offset 0xfc3000) (com.keenon.peanut.supermarket.vision.TrayCountingHelper$Result com.keenon.peanut.supermarket.vision.TrayCountingHelper.stepCalibration(org.opencv.core.Mat)+796)
+
+05-20 14:18:12.894   204   204 F DEBUG   :     #07 pc 02315c8b  /data/app/com.keenon.peanut.sample-1/oat/arm/base.odex (offset 0xfc3000) (com.keenon.peanut.supermarket.vision.TrayCountingHelper$Result com.keenon.peanut.supermarket.vision.TrayCountingHelper.processInner(byte[], int, int)+382)
+
+05-20 14:18:12.894   204   204 F DEBUG   :     #08 pc 02319ce9  /data/app/com.keenon.peanut.sample-1/oat/arm/base.odex (offset 0xfc3000) (com.keenon.peanut.supermarket.vision.TrayCountingHelper$Result com.keenon.peanut.supermarket.vision.TrayCountingHelper.process(byte[], int, int)+1772)
+
+05-20 14:18:12.894   204   204 F DEBUG   :     #09 pc 0234e4d7  /data/app/com.keenon.peanut.sample-1/oat/arm/base.odex (offset 0xfc3000) (void com.keenon.peanut.supermarket.fragment.CountFragment.lambda$onPreviewFrame$24$CountFragment(byte[], int, int, byte[])+362)
+
+05-20 14:18:12.894   204   204 F DEBUG   :     #10 pc 022d09f3  /data/app/com.keenon.peanut.sample-1/oat/arm/base.odex (offset 0xfc3000) (void com.keenon.peanut.supermarket.fragment.-$$Lambda$CountFragment$1P4BRreec4Vb1ZKLoPaeiVgbl30.run()+118)
+
+05-20 14:18:12.894   204   204 F DEBUG   :     #11 pc 739fb8bf  /data/dalvik-cache/arm/system@framework@boot.oat (offset 0x1ee2000)
+
+05-20 14:18:14.444   204   204 F DEBUG   : 
+
+05-20 14:18:14.444   204   204 F DEBUG   : Tombstone written to: /data/tombstones/tombstone_02
+
+05-20 14:18:40.927  3125  3391 F libc    : Fatal signal 11 (SIGSEGV), code 1, fault addr 0x0 in tid 3391 (TrayCount)
+
+05-20 14:18:41.028   204   204 F DEBUG   : *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+
+05-20 14:18:41.028   204   204 F DEBUG   : Build fingerprint: 'Android/rk3288/rk3288:6.0.1/MXC89K/builder04291124:userdebug/test-keys'
+
+05-20 14:18:41.028   204   204 F DEBUG   : Revision: '0'
+
+05-20 14:18:41.028   204   204 F DEBUG   : ABI: 'arm'
+
+05-20 14:18:41.028   204   204 F DEBUG   : pid: 3125, tid: 3391, name: TrayCount  >>> com.keenon.peanut.sample <<<
+
+05-20 14:18:41.028   204   204 F DEBUG   : signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0
+
+05-20 14:18:41.043   204   204 F DEBUG   :     r0 00000000  r1 9ae68254  r2 01010000  r3 00000001
+
+05-20 14:18:41.043   204   204 F DEBUG   :     r4 ffffffff  r5 b6cdbe40  r6 9aac9654  r7 9ae67bb8
+
+05-20 14:18:41.043   204   204 F DEBUG   :     r8 9ae68254  r9 b8608fc0  sl 00010000  fp 00000000
+
+05-20 14:18:41.043   204   204 F DEBUG   :     ip 9aac7350  sp 9ae67b90  lr 9a272f45  pc 9a2ff832  cpsr 200b0030
+
+05-20 14:18:41.097   204   204 F DEBUG   : 
+
+05-20 14:18:41.097   204   204 F DEBUG   : backtrace:
+
+05-20 14:18:41.097   204   204 F DEBUG   :     #00 pc 001cb832  /data/app/com.keenon.peanut.sample-1/lib/arm/libopencv_java4.so (_ZNK2cv11_InputArray4typeEi+73)
+
+05-20 14:18:41.097   204   204 F DEBUG   :     #01 pc 0013ef41  /data/app/com.keenon.peanut.sample-1/lib/arm/libopencv_java4.so
+
+05-20 14:18:41.097   204   204 F DEBUG   :     #02 pc 0013ff25  /data/app/com.keenon.peanut.sample-1/lib/arm/libopencv_java4.so (_ZN2cv6divideEdRKNS_11_InputArrayERKNS_12_OutputArrayEi+80)
+
+05-20 14:18:41.097   204   204 F DEBUG   :     #03 pc 000dbc57  /data/app/com.keenon.peanut.sample-1/lib/arm/libopencv_java4.so (Java_org_opencv_core_Core_divide_17+66)
+
+05-20 14:18:41.097   204   204 F DEBUG   :     #04 pc 017f07ab  /data/app/com.keenon.peanut.sample-1/oat/arm/base.odex (offset 0xfc3000) (void org.opencv.core.Core.divide_7(long, double, double, double, double, long)+182)
+
+05-20 14:18:41.097   204   204 F DEBUG   :     #05 pc 017efbe5  /data/app/com.keenon.peanut.sample-1/oat/arm/base.odex (offset 0xfc3000) (void org.opencv.core.Core.divide(org.opencv.core.Mat, org.opencv.core.Scalar, org.opencv.core.Mat)+456)
+
+05-20 14:18:41.097   204   204 F DEBUG   :     #06 pc 02317f21  /data/app/com.keenon.peanut.sample-1/oat/arm/base.odex (offset 0xfc3000) (com.keenon.peanut.supermarket.vision.TrayCountingHelper$Result com.keenon.peanut.supermarket.vision.TrayCountingHelper.stepCalibration(org.opencv.core.Mat)+796)
+
+05-20 14:18:41.097   204   204 F DEBUG   :     #07 pc 02315c8b  /data/app/com.keenon.peanut.sample-1/oat/arm/base.odex (offset 0xfc3000) (com.keenon.peanut.supermarket.vision.TrayCountingHelper$Result com.keenon.peanut.supermarket.vision.TrayCountingHelper.processInner(byte[], int, int)+382)
+
+05-20 14:18:41.097   204   204 F DEBUG   :     #08 pc 02319ce9  /data/app/com.keenon.peanut.sample-1/oat/arm/base.odex (offset 0xfc3000) (com.keenon.peanut.supermarket.vision.TrayCountingHelper$Result com.keenon.peanut.supermarket.vision.TrayCountingHelper.process(byte[], int, int)+1772)
+
+05-20 14:18:41.097   204   204 F DEBUG   :     #09 pc 0234e4d7  /data/app/com.keenon.peanut.sample-1/oat/arm/base.odex (offset 0xfc3000) (void com.keenon.peanut.supermarket.fragment.CountFragment.lambda$onPreviewFrame$24$CountFragment(byte[], int, int, byte[])+362)
+
+05-20 14:18:41.098   204   204 F DEBUG   :     #10 pc 022d09f3  /data/app/com.keenon.peanut.sample-1/oat/arm/base.odex (offset 0xfc3000) (void com.keenon.peanut.supermarket.fragment.-$$Lambda$CountFragment$1P4BRreec4Vb1ZKLoPaeiVgbl30.run()+118)
+
+05-20 14:18:41.098   204   204 F DEBUG   :     #11 pc 739fb8bf  /data/dalvik-cache/arm/system@framework@boot.oat (offset 0x1ee2000)
+
+05-20 14:18:42.564   204   204 F DEBUG   : 
+
+05-20 14:18:42.564   204   204 F DEBUG   : Tombstone written to: /data/tombstones/tombstone_03
+
+05-20 14:28:05.548  6860  7012 F libc    : Fatal signal 11 (SIGSEGV), code 1, fault addr 0x0 in tid 7012 (TrayCount)
+
+05-20 14:28:05.601   204   204 F DEBUG   : *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+
+05-20 14:28:05.601   204   204 F DEBUG   : Build fingerprint: 'Android/rk3288/rk3288:6.0.1/MXC89K/builder04291124:userdebug/test-keys'
+
+05-20 14:28:05.601   204   204 F DEBUG   : Revision: '0'
+
+05-20 14:28:05.601   204   204 F DEBUG   : ABI: 'arm'
+
+05-20 14:28:05.602   204   204 F DEBUG   : pid: 6860, tid: 7012, name: TrayCount  >>> com.keenon.peanut.sample <<<
+
+05-20 14:28:05.602   204   204 F DEBUG   : signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0
+
+05-20 14:28:05.616   204   204 F DEBUG   :     r0 00000000  r1 9b4fc254  r2 01010000  r3 00000001
+
+05-20 14:28:05.616   204   204 F DEBUG   :     r4 ffffffff  r5 b6cdbe40  r6 985eb654  r7 9b4fbbb8
+
+05-20 14:28:05.617   204   204 F DEBUG   :     r8 9b4fc254  r9 b8957c38  sl 00010000  fp 00000000
+
+05-20 14:28:05.617   204   204 F DEBUG   :     ip 985e9350  sp 9b4fbb90  lr 97d94f45  pc 97e21832  cpsr 200b0030
+
+05-20 14:28:05.639   204   204 F DEBUG   : 
+
+05-20 14:28:05.639   204   204 F DEBUG   : backtrace:
+
+05-20 14:28:05.639   204   204 F DEBUG   :     #00 pc 001cb832  /data/app/com.keenon.peanut.sample-2/lib/arm/libopencv_java4.so (_ZNK2cv11_InputArray4typeEi+73)
+
+05-20 14:28:05.639   204   204 F DEBUG   :     #01 pc 0013ef41  /data/app/com.keenon.peanut.sample-2/lib/arm/libopencv_java4.so
+
+05-20 14:28:05.639   204   204 F DEBUG   :     #02 pc 0013ff25  /data/app/com.keenon.peanut.sample-2/lib/arm/libopencv_java4.so (_ZN2cv6divideEdRKNS_11_InputArrayERKNS_12_OutputArrayEi+80)
+
+05-20 14:28:05.639   204   204 F DEBUG   :     #03 pc 000dbc57  /data/app/com.keenon.peanut.sample-2/lib/arm/libopencv_java4.so (Java_org_opencv_core_Core_divide_17+66)
+
+05-20 14:28:05.639   204   204 F DEBUG   :     #04 pc 017f17ab  /data/app/com.keenon.peanut.sample-2/oat/arm/base.odex (offset 0xfc4000) (void org.opencv.core.Core.divide_7(long, double, double, double, double, long)+182)
+
+05-20 14:28:05.639   204   204 F DEBUG   :     #05 pc 017f0be5  /data/app/com.keenon.peanut.sample-2/oat/arm/base.odex (offset 0xfc4000) (void org.opencv.core.Core.divide(org.opencv.core.Mat, org.opencv.core.Scalar, org.opencv.core.Mat)+456)
+
+05-20 14:28:05.640   204   204 F DEBUG   :     #06 pc 02319b57  /data/app/com.keenon.peanut.sample-2/oat/arm/base.odex (offset 0xfc4000) (com.keenon.peanut.supermarket.vision.TrayCountingHelper$Result com.keenon.peanut.supermarket.vision.TrayCountingHelper.stepCalibration(org.opencv.core.Mat)+1274)
+
+05-20 14:28:05.640   204   204 F DEBUG   :     #07 pc 023176e3  /data/app/com.keenon.peanut.sample-2/oat/arm/base.odex (offset 0xfc4000) (com.keenon.peanut.supermarket.vision.TrayCountingHelper$Result com.keenon.peanut.supermarket.vision.TrayCountingHelper.processInner(byte[], int, int)+382)
+
+05-20 14:28:05.640   204   204 F DEBUG   :     #08 pc 0231bcf1  /data/app/com.keenon.peanut.sample-2/oat/arm/base.odex (offset 0xfc4000) (com.keenon.peanut.supermarket.vision.TrayCountingHelper$Result com.keenon.peanut.supermarket.vision.TrayCountingHelper.process(byte[], int, int)+1772)
+
+05-20 14:28:05.640   204   204 F DEBUG   :     #09 pc 0235099f  /data/app/com.keenon.peanut.sample-2/oat/arm/base.odex (offset 0xfc4000) (void com.keenon.peanut.supermarket.fragment.CountFragment.lambda$onPreviewFrame$24$CountFragment(byte[], int, int, byte[])+362)
+
+05-20 14:28:05.640   204   204 F DEBUG   :     #10 pc 022d1b33  /data/app/com.keenon.peanut.sample-2/oat/arm/base.odex (offset 0xfc4000) (void com.keenon.peanut.supermarket.fragment.-$$Lambda$CountFragment$1P4BRreec4Vb1ZKLoPaeiVgbl30.run()+118)
+
+05-20 14:28:05.640   204   204 F DEBUG   :     #11 pc 739fb8bf  /data/dalvik-cache/arm/system@framework@boot.oat (offset 0x1ee2000)
+
+05-20 14:28:06.640   204   204 F DEBUG   : 
+
+05-20 14:28:06.640   204   204 F DEBUG   : Tombstone written to: /data/tombstones/tombstone_04
+
+05-20 14:28:23.431  7097  7239 F libc    : Fatal signal 11 (SIGSEGV), code 1, fault addr 0x0 in tid 7239 (TrayCount)
+
+05-20 14:28:23.532   204   204 F DEBUG   : *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+
+05-20 14:28:23.533   204   204 F DEBUG   : Build fingerprint: 'Android/rk3288/rk3288:6.0.1/MXC89K/builder04291124:userdebug/test-keys'
+
+05-20 14:28:23.533   204   204 F DEBUG   : Revision: '0'
+
+05-20 14:28:23.533   204   204 F DEBUG   : ABI: 'arm'
+
+05-20 14:28:23.533   204   204 F DEBUG   : pid: 7097, tid: 7239, name: TrayCount  >>> com.keenon.peanut.sample <<<
+
+05-20 14:28:23.533   204   204 F DEBUG   : signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0
+
+05-20 14:28:23.548   204   204 F DEBUG   :     r0 00000000  r1 9b795254  r2 01010000  r3 00000001
+
+05-20 14:28:23.548   204   204 F DEBUG   :     r4 ffffffff  r5 b6cdbe40  r6 98802654  r7 9b794bb8
+
+05-20 14:28:23.548   204   204 F DEBUG   :     r8 9b795254  r9 b87e0cc8  sl 00010000  fp 00000000
+
+05-20 14:28:23.548   204   204 F DEBUG   :     ip 98800350  sp 9b794b90  lr 97fabf45  pc 98038832  cpsr 200b0030
+
+05-20 14:28:23.567   204   204 F DEBUG   : 
+
+05-20 14:28:23.567   204   204 F DEBUG   : backtrace:
+
+05-20 14:28:23.567   204   204 F DEBUG   :     #00 pc 001cb832  /data/app/com.keenon.peanut.sample-2/lib/arm/libopencv_java4.so (_ZNK2cv11_InputArray4typeEi+73)
+
+05-20 14:28:23.567   204   204 F DEBUG   :     #01 pc 0013ef41  /data/app/com.keenon.peanut.sample-2/lib/arm/libopencv_java4.so
+
+05-20 14:28:23.567   204   204 F DEBUG   :     #02 pc 0013ff25  /data/app/com.keenon.peanut.sample-2/lib/arm/libopencv_java4.so (_ZN2cv6divideEdRKNS_11_InputArrayERKNS_12_OutputArrayEi+80)
+
+05-20 14:28:23.567   204   204 F DEBUG   :     #03 pc 000dbc57  /data/app/com.keenon.peanut.sample-2/lib/arm/libopencv_java4.so (Java_org_opencv_core_Core_divide_17+66)
+
+05-20 14:28:23.567   204   204 F DEBUG   :     #04 pc 017f17ab  /data/app/com.keenon.peanut.sample-2/oat/arm/base.odex (offset 0xfc4000) (void org.opencv.core.Core.divide_7(long, double, double, double, double, long)+182)
+
+05-20 14:28:23.567   204   204 F DEBUG   :     #05 pc 017f0be5  /data/app/com.keenon.peanut.sample-2/oat/arm/base.odex (offset 0xfc4000) (void org.opencv.core.Core.divide(org.opencv.core.Mat, org.opencv.core.Scalar, org.opencv.core.Mat)+456)
+
+05-20 14:28:23.567   204   204 F DEBUG   :     #06 pc 02319b57  /data/app/com.keenon.peanut.sample-2/oat/arm/base.odex (offset 0xfc4000) (com.keenon.peanut.supermarket.vision.TrayCountingHelper$Result com.keenon.peanut.supermarket.vision.TrayCountingHelper.stepCalibration(org.opencv.core.Mat)+1274)
+
+05-20 14:28:23.567   204   204 F DEBUG   :     #07 pc 023176e3  /data/app/com.keenon.peanut.sample-2/oat/arm/base.odex (offset 0xfc4000) (com.keenon.peanut.supermarket.vision.TrayCountingHelper$Result com.keenon.peanut.supermarket.vision.TrayCountingHelper.processInner(byte[], int, int)+382)
+
+05-20 14:28:23.567   204   204 F DEBUG   :     #08 pc 0231bcf1  /data/app/com.keenon.peanut.sample-2/oat/arm/base.odex (offset 0xfc4000) (com.keenon.peanut.supermarket.vision.TrayCountingHelper$Result com.keenon.peanut.supermarket.vision.TrayCountingHelper.process(byte[], int, int)+1772)
+
+05-20 14:28:23.567   204   204 F DEBUG   :     #09 pc 0235099f  /data/app/com.keenon.peanut.sample-2/oat/arm/base.odex (offset 0xfc4000) (void com.keenon.peanut.supermarket.fragment.CountFragment.lambda$onPreviewFrame$24$CountFragment(byte[], int, int, byte[])+362)
+
+05-20 14:28:23.567   204   204 F DEBUG   :     #10 pc 022d1b33  /data/app/com.keenon.peanut.sample-2/oat/arm/base.odex (offset 0xfc4000) (void com.keenon.peanut.supermarket.fragment.-$$Lambda$CountFragment$1P4BRreec4Vb1ZKLoPaeiVgbl30.run()+118)
+
+05-20 14:28:23.567   204   204 F DEBUG   :     #11 pc 739fb8bf  /data/dalvik-cache/arm/system@framework@boot.oat (offset 0x1ee2000)
+
+05-20 14:28:24.654   204   204 F DEBUG   : 
+
+05-20 14:28:24.654   204   204 F DEBUG   : Tombstone written to: /data/tombstones/tombstone_05
+
+05-20 15:07:24.155 20739 20739 F libc    : Fatal signal 13 (SIGPIPE), code 0 in tid 20739 (libcoreutils.so)
+
+05-20 15:07:24.208   204   204 F DEBUG   : *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+
+05-20 15:07:24.208   204   204 F DEBUG   : Build fingerprint: 'Android/rk3288/rk3288:6.0.1/MXC89K/builder04291124:userdebug/test-keys'
+
+05-20 15:07:24.210   204   204 F DEBUG   : Revision: '0'
+
+05-20 15:07:24.210   204   204 F DEBUG   : ABI: 'arm'
+
+05-20 15:07:24.210   204   204 F DEBUG   : pid: 20739, tid: 20739, name: libcoreutils.so  >>> /data/app/ZArchiver_v0.9.3/lib/arm/libcoreutils.so <<<
+
+05-20 15:07:24.210   204   204 F DEBUG   : signal 13 (SIGPIPE), code 0 (SI_USER), fault addr --------
+
+05-20 15:07:24.211   204   204 F DEBUG   :     r0 ffffffe0  r1 b727c038  r2 0000000b  r3 00000888
+
+05-20 15:07:24.211   204   204 F DEBUG   :     r4 b6ea9478  r5 0000000b  r6 b727c038  r7 00000004
+
+05-20 15:07:24.211   204   204 F DEBUG   :     r8 00000000  r9 00000000  sl 00000000  fp be9a4938
+
+05-20 15:07:24.211   204   204 F DEBUG   :     ip 0000000b  sp be9a48c8  lr b6e90fd1  pc b6e8b4cc  cpsr 000e0010
+
+05-20 15:07:24.217   204   204 F DEBUG   : 
+
+05-20 15:07:24.217   204   204 F DEBUG   : backtrace:
+
+05-20 15:07:24.217   204   204 F DEBUG   :     #00 pc 000444cc  /system/lib/libc.so (write+12)
+
+05-20 15:07:24.217   204   204 F DEBUG   :     #01 pc 00049fcd  /system/lib/libc.so (__swrite+70)
+
+05-20 15:07:24.217   204   204 F DEBUG   :     #02 pc 00039b0d  /system/lib/libc.so (__sflush+48)
+
+05-20 15:07:24.218   204   204 F DEBUG   :     #03 pc 00039b5f  /system/lib/libc.so (fflush+54)
+
+05-20 15:07:24.218   204   204 F DEBUG   :     #04 pc 000017e5  /data/app/ZArchiver_v0.9.3/lib/arm/libcoreutils.so
+
+05-20 15:07:24.218   204   204 F DEBUG   :     #05 pc 00016631  /system/lib/libc.so (__libc_init+44)
+
+05-20 15:07:24.218   204   204 F DEBUG   :     #06 pc 00000f0c  /data/app/ZArchiver_v0.9.3/lib/arm/libcoreutils.so
+
+05-20 15:07:24.264   204   204 F DEBUG   : 
+
+05-20 15:07:24.264   204   204 F DEBUG   : Tombstone written to: /data/tombstones/tombstone_06
+
+05-20 15:58:44.596  6690  7218 F libc    : Fatal signal 11 (SIGSEGV), code 1, fault addr 0x9ce67000 in tid 7218 (TrayCount-NCNN)
+
+05-20 15:58:44.698   204   204 F DEBUG   : *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+
+05-20 15:58:44.698   204   204 F DEBUG   : Build fingerprint: 'Android/rk3288/rk3288:6.0.1/MXC89K/builder04291124:userdebug/test-keys'
+
+05-20 15:58:44.698   204   204 F DEBUG   : Revision: '0'
+
+05-20 15:58:44.698   204   204 F DEBUG   : ABI: 'arm'
+
+05-20 15:58:44.698   204   204 F DEBUG   : pid: 6690, tid: 7218, name: TrayCount-NCNN  >>> com.keenon.peanut.sample <<<
+
+05-20 15:58:44.698   204   204 F DEBUG   : signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x9ce67000
+
+05-20 15:58:44.712   204   204 F DEBUG   :     r0 97998aa0  r1 000018ac  r2 00000001  r3 97ac4aa0
+
+05-20 15:58:44.712   204   204 F DEBUG   :     r4 9ce66fec  r5 00000000  r6 97bf0aa0  r7 9b0a1130
+
+05-20 15:58:44.712   204   204 F DEBUG   :     r8 00000280  r9 00000780  sl 9cdab00c  fp 9cdab00c
+
+05-20 15:58:44.712   204   204 F DEBUG   :     ip 00000000  sp 9b0a1110  lr 00009600  pc 9ab0747e  cpsr 200f0030
+
+05-20 15:58:44.728   204   204 F DEBUG   : 
+
+05-20 15:58:44.728   204   204 F DEBUG   : backtrace:
+
+05-20 15:58:44.728   204   204 F DEBUG   :     #00 pc 0007747e  /data/app/com.keenon.peanut.sample-1/lib/arm/libncnn.so
+
+05-20 15:58:44.728   204   204 F DEBUG   :     #01 pc 00073e4d  /data/app/com.keenon.peanut.sample-1/lib/arm/libncnn.so (_ZN4ncnn3Mat11from_pixelsEPKhiiiiPNS_9AllocatorE+76)
+
+05-20 15:58:44.729   204   204 F DEBUG   :     #02 pc 00073d93  /data/app/com.keenon.peanut.sample-1/lib/arm/libncnn.so (_ZN4ncnn3Mat11from_pixelsEPKhiiiPNS_9AllocatorE+70)
+
+05-20 15:58:44.729   204   204 F DEBUG   :     #03 pc 00009bad  /data/app/com.keenon.peanut.sample-1/lib/arm/libyolov5.so (_ZN6YoloV46detectEP7_JNIEnvPhifPKcS4_iiii+328)
+
+05-20 15:58:44.729   204   204 F DEBUG   :     #04 pc 00008b91  /data/app/com.keenon.peanut.sample-1/lib/arm/libyolov5.so (_ZN13KNYoloManager11detectModelEP7_JNIEnviPhifPKcS4_iiii+140)
+
+05-20 15:58:44.729   204   204 F DEBUG   :     #05 pc 0000a355  /data/app/com.keenon.peanut.sample-1/lib/arm/libyolov5.so (Java_com_keenon_sdk_yolo_KNYoloExecutor_detectData+156)
+
+05-20 15:58:44.729   204   204 F DEBUG   :     #06 pc 023308d3  /data/app/com.keenon.peanut.sample-1/oat/arm/base.odex (offset 0xfbe000) (com.keenon.sdk.base.model.KNBox[] com.keenon.sdk.yolo.KNYoloExecutor.detectData(int, byte[], int, double, java.lang.String, java.lang.String, java.lang.String, int, java.lang.String, int, int, int, int)+278)
+
+05-20 15:58:44.729   204   204 F DEBUG   :     #07 pc 023214bf  /data/app/com.keenon.peanut.sample-1/oat/arm/base.odex (offset 0xfbe000) (com.keenon.sdk.base.model.KNBox[] com.keenon.peanut.supermarket.vision.TrayPlateCounter.runDetect(byte[], int, int)+722)
+
+05-20 15:58:44.729   204   204 F DEBUG   :     #08 pc 02321ac1  /data/app/com.keenon.peanut.sample-1/oat/arm/base.odex (offset 0xfbe000) (com.keenon.peanut.supermarket.vision.TrayPlateCounter$CountResult com.keenon.peanut.supermarket.vision.TrayPlateCounter.countDetailed(byte[], int, int)+804)
+
+05-20 15:58:44.729   204   204 F DEBUG   :     #09 pc 022e4bf5  /data/app/com.keenon.peanut.sample-1/oat/arm/base.odex (offset 0xfbe000) (void com.keenon.peanut.supermarket.fragment.CountFragment.lambda$onPreviewFrame$22$CountFragment(byte[], int, int, boolean)+176)
+
+05-20 15:58:44.729   204   204 F DEBUG   :     #10 pc 022c97bb  /data/app/com.keenon.peanut.sample-1/oat/arm/base.odex (offset 0xfbe000) (void com.keenon.peanut.supermarket.fragment.-$$Lambda$CountFragment$_yaxenNLqvvpmdldCWhYmdRd1Vw.run()+118)
+
+05-20 15:58:44.729   204   204 F DEBUG   :     #11 pc 739fb8bf  /data/dalvik-cache/arm/system@framework@boot.oat (offset 0x1ee2000)
+
+05-20 15:58:46.210   204   204 F DEBUG   : 
+
+05-20 15:58:46.210   204   204 F DEBUG   : Tombstone written to: /data/tombstones/tombstone_07
+

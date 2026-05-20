@@ -30,6 +30,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.keenon.peanut.sample.R;
+import com.keenon.peanut.supermarket.camera.TrayCameraHal;
 import com.keenon.peanut.supermarket.vision.ObjectDetectorHelper;
 
 import java.io.IOException;
@@ -260,20 +261,33 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback {
       camera.setDisplayOrientation(cameraInfo.orientation);
       camera.setPreviewDisplay(holder);
 
-      startDetectThread();
-      attachDetectionCallback();
-
       camera.startPreview();
       previewing = true;
       placeholder.setVisibility(View.GONE);
       btnStart.setEnabled(false);
       btnStop.setEnabled(true);
-      statusText.setText(
-          getString(R.string.cam_status_running, currentCameraId)
-              + " · "
-              + previewWidth
-              + "×"
-              + previewHeight);
+
+      if (TrayCameraHal.isFragileRockChipHal()) {
+        statusText.setText(
+            getString(R.string.cam_status_running, currentCameraId)
+                + " · "
+                + previewWidth
+                + "×"
+                + previewHeight
+                + " · preview only");
+        Toast.makeText(requireContext(),
+            "Object labels disabled on RK3288 (camera driver crashes on frame callbacks).",
+            Toast.LENGTH_LONG).show();
+      } else {
+        startDetectThread();
+        attachDetectionCallback();
+        statusText.setText(
+            getString(R.string.cam_status_running, currentCameraId)
+                + " · "
+                + previewWidth
+                + "×"
+                + previewHeight);
+      }
       resizeSurfaceToAspect();
       highlightActiveIndex();
     } catch (IOException | RuntimeException e) {

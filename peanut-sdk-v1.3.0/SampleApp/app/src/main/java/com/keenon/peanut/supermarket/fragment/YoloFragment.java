@@ -44,6 +44,7 @@ import com.keenon.peanut.sample.R;
 import com.keenon.peanut.sample.receiver.RobotMovementManager;
 import com.keenon.peanut.supermarket.SupermarketActivity;
 import com.keenon.peanut.supermarket.util.TtsHelper;
+import com.keenon.peanut.supermarket.camera.TrayCameraHal;
 import com.keenon.peanut.supermarket.stream.DetectionStreamServer;
 import com.keenon.peanut.supermarket.vision.ObjectDetectorHelper;
 import com.keenon.peanut.supermarket.yolo.BodyDetectorHelper;
@@ -87,10 +88,15 @@ public class YoloFragment extends Fragment implements SurfaceHolder.Callback {
     /** Native NCNN/OpenCV path: do not run inference every frame (reduces native crashes / OOM). */
     private static final long MIN_NATIVE_DETECT_INTERVAL_MS = 550L;
     /**
-     * OEM libyolov5/libncnn is still unstable on native /dev/video path on this robot build
-     * (SIGSEGV in ncnn::Mat::from_pixels). Keep preview active but skip native JNI inference.
+     * Optional force-enable native NCNN on non-RK boards. On RK3288, inference is always enabled
+     * when using Native camera (Android preview callbacks crash mediaserver instead).
      */
-    private static final boolean ENABLE_NATIVE_YOLO_INFERENCE = false;
+    private static final boolean FORCE_NATIVE_YOLO_INFERENCE = false;
+
+    /** Tray plate counting via native JPEG capture — required on RK3288 T10. */
+    private static boolean isNativeYoloInferenceEnabled() {
+        return TrayCameraHal.isFragileRockChipHal() || FORCE_NATIVE_YOLO_INFERENCE;
+    }
     // How long (ms) the robot rotates to do a full 180° turn toward the person behind it
     private static final long ROTATION_DURATION_MS     = 3000L;
     // Camera id used for person-facing interaction trigger.
@@ -290,18 +296,23 @@ public class YoloFragment extends Fragment implements SurfaceHolder.Callback {
                                 if (jpeg != null) {
                                     schedulePreviewDraw(jpeg);
                                     long now = SystemClock.uptimeMillis();
-                                    if (!ENABLE_NATIVE_YOLO_INFERENCE) {
-                                        // Preview-only native path never calls runYoloOnFrame — still push JPEGs
-                                        // so the PC dashboard (DetectionStreamServer :8765) receives a stream.
+                                    if (!isNativeYoloInferenceEnabled()) {
                                         if (streamServer != null && streamServer.hasClients()) {
                                             streamServer.pushFrame(currentCameraId, jpeg, "[]",
                                                     1000f / Math.max(1f, (float) NATIVE_CAPTURE_INTERVAL_MS), 0L);
                                         }
                                         if (!nativeInferenceWarned) {
                                             nativeInferenceWarned = true;
-                                            Log.w(TAG, "Native YOLO inference disabled for stability; preview-only mode active.");
+                                            Log.w(TAG, "Native YOLO inference disabled; preview-only.");
                                             mainHandler.post(() -> statusText.setText(
-                                                    "Native preview only (YOLO disabled for stability). Use Android mode for inference."));
+                                                    "Native preview only (inference off)."));
+                                        }
+                                    } else if (useCoco) {
+                                        if (!nativeInferenceWarned) {
+                                            nativeInferenceWarned = true;
+                                            mainHandler.post(() -> Toast.makeText(requireContext(),
+                                                    "COCO needs Android camera. Select Tray model for native counting.",
+                                                    Toast.LENGTH_LONG).show());
                                         }
                                     } else if (now - lastNativeDetectAtMs >= MIN_NATIVE_DETECT_INTERVAL_MS) {
                                         lastNativeDetectAtMs = now;
@@ -448,6 +459,14 @@ public class YoloFragment extends Fragment implements SurfaceHolder.Callback {
             if (new File("/dev/video" + n).exists()) nativeVideoNodes.add(n);
         }
         if (!nativeVideoNodes.isEmpty()) currentVideoNode = nativeVideoNodes.get(0);
+
+        if (TrayCameraHal.isFragileRockChipHal() && modeNative != null) {
+            useNativeCamera = true;
+            modeNative.setChecked(true);
+            Toast.makeText(requireContext(),
+                    "RK3288: Native camera + Tray model = plate count. Try /dev/video7–10 if count stays 0.",
+                    Toast.LENGTH_LONG).show();
+        }
 
         setupZoneSliders(v);
         rebuildIndexButtons();
@@ -1117,11 +1136,17 @@ public class YoloFragment extends Fragment implements SurfaceHolder.Callback {
             androidCamera.setDisplayOrientation(info.orientation);
             androidCamera.setPreviewDisplay(surfaceView.getHolder());
 
-            startDetectThread();
-            attachAndroidDetectionCallback(session);
-
             androidCamera.startPreview();
             previewing = true;
+
+            if (TrayCameraHal.isFragileRockChipHal()) {
+                Toast.makeText(requireContext(),
+                        "Android camera cannot run YOLO on this robot — select Native camera mode.",
+                        Toast.LENGTH_LONG).show();
+            } else {
+                startDetectThread();
+                attachAndroidDetectionCallback(session);
+            }
             applyRunningUiState();
             resizeSurface();
         } catch (Exception e) {
@@ -1693,8 +1718,10 @@ public class YoloFragment extends Fragment implements SurfaceHolder.Callback {
         String camLabel = useNativeCamera
                 ? "Native /dev/video" + currentVideoNode
                 : "Android cam " + currentCameraId;
-        String modelLabel = useCoco ? "COCO·TFLite" : "NCNN·YOLOv5";
-        statusText.setText(camLabel + " · " + modelLabel);
+        String modelLabel = useCoco ? "COCO·TFLite" : "NCNN·Tray";
+        String inferHint = (useNativeCamera && isNativeYoloInferenceEnabled() && !useCoco)
+                ? " · counting" : "";
+        statusText.setText(camLabel + " · " + modelLabel + inferHint);
         // Show ROI border only in COCO mode (it reflects the 70% crop zone)
         if (roiBorder != null) {
             roiBorder.setVisibility(useCoco ? View.VISIBLE : View.GONE);

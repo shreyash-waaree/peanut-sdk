@@ -11,6 +11,7 @@ import com.keenon.peanut.sample.VoiceFragment;
 import com.keenon.peanut.supermarket.fragment.CameraFragment;
 import com.keenon.peanut.supermarket.fragment.HardwareFragment;
 import com.keenon.peanut.supermarket.fragment.SensorsFragment;
+import com.keenon.peanut.supermarket.fragment.CountFragment;
 import com.keenon.peanut.supermarket.fragment.YoloFragment;
 
 /**
@@ -22,6 +23,8 @@ import com.keenon.peanut.supermarket.fragment.YoloFragment;
  *   <li>Hardware: direct motor controls + live sensor read-outs (mirrors RobotController)</li>
  *   <li>Camera: live camera preview for on-robot diagnostics</li>
  *   <li>Sensors: live dashboard for every sensor topic (battery, IMU, LiDAR, sonar, etc.)</li>
+ *   <li>Yolo: NCNN YOLO object detection on tray cameras</li>
+ *   <li>Count: OpenCV classical tray-item counter (no ML)</li>
  * </ul>
  */
 public class DeveloperPagerAdapter extends FragmentStateAdapter {
@@ -33,7 +36,8 @@ public class DeveloperPagerAdapter extends FragmentStateAdapter {
   public static final int POS_CAMERA = 4;
   public static final int POS_SENSORS = 5;
   public static final int POS_YOLO = 6;
-  public static final int PAGE_COUNT = 7;
+  public static final int POS_COUNT = 7;
+  public static final int PAGE_COUNT = 8;
 
   public DeveloperPagerAdapter(@NonNull FragmentActivity activity) {
     super(activity);
@@ -55,6 +59,8 @@ public class DeveloperPagerAdapter extends FragmentStateAdapter {
         return new SensorsFragment();
       case POS_YOLO:
         return new YoloFragment();
+      case POS_COUNT:
+        return new CountFragment();
       case POS_HOME:
       default:
         return new HomeFragment();
