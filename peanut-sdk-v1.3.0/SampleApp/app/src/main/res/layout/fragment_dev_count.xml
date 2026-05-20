@@ -23,6 +23,28 @@
         android:textColor="#B0FFFFFF"
         android:textSize="13sp" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/count_engine_label"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp" />
+
+        <Spinner
+            android:id="@+id/count_engine_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
     <FrameLayout
         android:id="@+id/count_preview_container"
         android:layout_width="match_parent"
@@ -37,6 +59,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center" />
+
+        <SurfaceView
+            android:id="@+id/count_surface"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <com.keenon.peanut.supermarket.widget.TrayRoiOverlayView
+            android:id="@+id/count_roi_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/count_placeholder"
@@ -90,7 +126,98 @@
             android:visibility="gone" />
     </FrameLayout>
 
-    <!-- Tray circle tuning — mirrors KeenonDiner KNPlateFilter circle(324.9, 229.22, 265) -->
+    <TextView
+        android:id="@+id/count_roi_prompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:padding="6dp"
+        android:background="#33F59E0B"
+        android:text="@string/count_roi_prompt_top"
+        android:textColor="#FFF59E0B"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/count_roi_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="6dp"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btn_count_roi_confirm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:text="@string/count_roi_confirm" />
+
+        <Button
+            android:id="@+id/btn_count_roi_reset"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="6dp"
+            android:text="@string/count_roi_reset" />
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/count_ocv_grid_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:visibility="gone"
+        android:scrollbars="none">
+
+        <RadioGroup
+            android:id="@+id/count_ocv_grid_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="4dp">
+
+            <RadioButton
+                android:id="@+id/count_ocv_grid_2x2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/count2_grid_2x2"
+                android:textColor="#E0E0E0"
+                android:textSize="11sp" />
+
+            <RadioButton
+                android:id="@+id/count_ocv_grid_3x3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/count2_grid_3x3"
+                android:textColor="#E0E0E0"
+                android:textSize="11sp" />
+
+            <RadioButton
+                android:id="@+id/count_ocv_grid_4x4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/count2_grid_4x4"
+                android:textColor="#E0E0E0"
+                android:textSize="11sp" />
+
+            <RadioButton
+                android:id="@+id/count_ocv_grid_2x3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/count2_grid_2x3"
+                android:textColor="#E0E0E0"
+                android:textSize="11sp" />
+        </RadioGroup>
+    </HorizontalScrollView>
+
+    <!-- NCNN-only: circle tuning -->
     <LinearLayout
         android:id="@+id/count_roi_panel"
         android:layout_width="match_parent"

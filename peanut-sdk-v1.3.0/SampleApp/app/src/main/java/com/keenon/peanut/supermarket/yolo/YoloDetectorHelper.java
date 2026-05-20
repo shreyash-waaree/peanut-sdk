@@ -200,6 +200,10 @@ public final class YoloDetectorHelper {
         int modelH      = (currentMode == Mode.COCO) ? MODEL_W          : TRAY_MODEL_H;
         String[] labels = (currentMode == Mode.COCO) ? COCO_LABELS      : TRAY_LABELS;
 
+        int jniSrcW =
+                srcWidth == MODEL_W ? NcnnModelJpeg.JNI_SRC_W : srcWidth;
+        int jniSrcH = srcHeight;
+
         try {
             KNBox[] boxes;
             synchronized (NcnnGate.LOCK) {
@@ -208,7 +212,7 @@ public final class YoloDetectorHelper {
                         confThr,
                         paramPath, binPath,
                         inputTag, INPUT_ID, EXTRACT_TAG,
-                        srcWidth, srcHeight, MODEL_W, modelH);
+                        jniSrcW, jniSrcH, MODEL_W, modelH);
             }
 
             if (boxes == null || boxes.length == 0) return Collections.emptyList();

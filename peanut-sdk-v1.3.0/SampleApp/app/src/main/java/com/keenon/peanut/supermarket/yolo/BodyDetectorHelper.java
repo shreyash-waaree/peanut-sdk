@@ -87,9 +87,11 @@ public final class BodyDetectorHelper {
         try {
             paramPath = copyAssetToFiles(PARAM_ASSET);
             binPath   = copyAssetToFiles(BIN_ASSET);
-            executor  = new KNYoloExecutor();
-            executor.init(MODEL_SIZE);
-            executor.initModel(MODEL_TYPE, paramPath, binPath);
+            synchronized (NcnnGate.LOCK) {
+                executor = new KNYoloExecutor();
+                executor.init(MODEL_SIZE);
+                executor.initModel(MODEL_TYPE, paramPath, binPath);
+            }
             initialized = true;
             Log.i(TAG, "body_detection model ready — " + paramPath);
             return true;
@@ -113,18 +115,26 @@ public final class BodyDetectorHelper {
     public synchronized List<Result> detect(byte[] jpeg, int srcWidth, int srcHeight) {
         if (!initialized || executor == null) return Collections.emptyList();
         if (jpeg == null || jpeg.length < 4) return Collections.emptyList();
-        if (!isLikelyJpeg(jpeg)) return Collections.emptyList();
+        if (!NcnnModelJpeg.isLikelyJpeg(jpeg) && !NcnnModelJpeg.isJpegDecodable(jpeg)) {
+            return Collections.emptyList();
+        }
 
-        byte[] canonical = canonicalizeJpeg(jpeg);
-        if (canonical == null || !isLikelyJpeg(canonical)) return Collections.emptyList();
+        byte[] modelJpeg = NcnnModelJpeg.forModelInput(jpeg);
+        if (modelJpeg == null) return Collections.emptyList();
 
         try {
-            KNBox[] boxes = executor.detectData(
-                    MODEL_TYPE, canonical, canonical.length,
-                    CONF_THRESH,
-                    paramPath, binPath,
-                    INPUT_TAG, INPUT_ID, EXTRACT_TAG,
-                    srcWidth, srcHeight, MODEL_W, MODEL_H);
+            final KNBox[] boxes;
+            synchronized (NcnnGate.LOCK) {
+                boxes = executor.detectData(
+                        MODEL_TYPE, modelJpeg, modelJpeg.length,
+                        CONF_THRESH,
+                        paramPath, binPath,
+                        INPUT_TAG, INPUT_ID, EXTRACT_TAG,
+                        NcnnModelJpeg.JNI_SRC_W,
+                        NcnnModelJpeg.JNI_SRC_H,
+                        NcnnModelJpeg.MODEL_W,
+                        NcnnModelJpeg.MODEL_H);
+            }
 
             if (boxes == null || boxes.length == 0) return Collections.emptyList();
 
@@ -153,7 +163,11 @@ public final class BodyDetectorHelper {
 
     public synchronized void close() {
         if (initialized && executor != null) {
-            try { executor.destroyModel(); } catch (Throwable ignored) {}
+            try {
+                synchronized (NcnnGate.LOCK) {
+                    executor.destroyModel();
+                }
+            } catch (Throwable ignored) {}
             executor    = null;
             initialized = false;
         }

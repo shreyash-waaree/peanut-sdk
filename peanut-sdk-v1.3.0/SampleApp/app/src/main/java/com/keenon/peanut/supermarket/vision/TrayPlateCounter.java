@@ -189,9 +189,8 @@ public class TrayPlateCounter {
     /** Single-threaded JNI entry — never overlap detectData calls (process-wide). */
     private KNBox[] runDetect(byte[] canonical, int srcW, int srcH) {
         if (!modelReady || executor == null || canonical == null) return null;
-        // RK3288 / libncnn: from_pixels SIGSEGV when JPEG intrinsic size != (w,h) passed
-        // to detectData, or after native "initModel" during a marginal frame. Always feed
-        // a freshly encoded 640×480 JPEG so buffer layout matches MODEL_W×MODEL_H exactly.
+        // RK3288 / libyolov5: when srcW==modelW native skips JPEG decode and treats buffer as
+        // raw RGB (SIGSEGV). Use NcnnModelJpeg.JNI_SRC_W and a 640×480 JPEG from forModelInput.
         byte[] modelJpeg = jpegResizedToModelInput(canonical);
         if (modelJpeg == null) {
             Log.w(TAG, "runDetect: skip — could not build " + MODEL_W + "×" + MODEL_H + " model JPEG");
@@ -203,7 +202,10 @@ public class TrayPlateCounter {
                     confThreshold,
                     paramPath, binPath,
                     INPUT_TAG, INPUT_ID, EXTRACT_TAG,
-                    MODEL_W, MODEL_H, MODEL_W, MODEL_H);
+                    com.keenon.peanut.supermarket.yolo.NcnnModelJpeg.JNI_SRC_W,
+                    com.keenon.peanut.supermarket.yolo.NcnnModelJpeg.JNI_SRC_H,
+                    MODEL_W,
+                    MODEL_H);
         }
     }
 

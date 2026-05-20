@@ -14,15 +14,19 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +41,9 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.keenon.peanut.sample.R;
+import com.keenon.peanut.supermarket.vision.TrayCountingHelper;
 import com.keenon.peanut.supermarket.vision.TrayPlateCounter;
+import com.keenon.peanut.supermarket.widget.TrayRoiOverlayView;
 
 import java.io.IOException;
 import java.util.List;
@@ -47,8 +53,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Developer "Count" tab.
  *
- * Uses the same canpan_detection NCNN YOLOv5 model that KeenonDiner production uses,
- * with the same circular ROI post-filter that eliminates background detections.
+ * <p><strong>NCNN</strong> uses the canpan YOLO model (same family as production). <strong>OpenCV</strong>
+ * uses classical grid / absdiff counting (same algorithm as Count2) — no neural network on that path.
+ * NCNN can crash on some RK boards when JNI runs concurrently; OpenCV avoids {@code libncnn} entirely.</p>
  *
  * <p>Camera: <strong>Android Camera1 only</strong> — {@link android.hardware.Camera} with a
  * {@link android.view.TextureView} and {@code setPreviewTexture} so NV21 preview callbacks work on
@@ -68,6 +75,10 @@ public class CountFragment extends Fragment implements TextureView.SurfaceTextur
 
     private static final String TAG = "CountFragment";
     private static final int REQ_CAMERA = 2202;
+    private static final int REQ_CAMERA_OPENCV = 2205;
+
+    private static final int ENGINE_NCNN = 0;
+    private static final int ENGINE_OPENCV = 1;
 
     private static final long DETECT_INTERVAL_MS = 500L;
     private static final int  TRAY_CAMERA_COUNT  = 3;
@@ -90,11 +101,61 @@ public class CountFragment extends Fragment implements TextureView.SurfaceTextur
     private View         roiBorder;
     private ScrollView   logsScroll;
     private TextView     logsText;
+    private Spinner      countEngineSpinner;
+    private SurfaceView  countSurface;
+    private TrayRoiOverlayView countRoiOverlay;
+    private View         countOcvGridScroll;
+    private RadioGroup   countOcvGridGroup;
+    private OpenCvTrayCountHelper openCvHelper;
+    private boolean      suppressEngineSpinner;
+    private int          lastEngineSelection = ENGINE_NCNN;
     private boolean      logsVisible = false;
     private final Deque<String> logBuffer = new ArrayDeque<>();
     private static final int LOG_MAX_LINES = 80;
     private final SimpleDateFormat logTimeFmt = new SimpleDateFormat("HH:mm:ss.SSS", java.util.Locale.US);
     private int frameSeq = 0;
+
+    private boolean isOpenCvEngine() {
+        return lastEngineSelection == ENGINE_OPENCV;
+    }
+
+    private void applyEngineUi() {
+        boolean cv = isOpenCvEngine();
+        if (texturePreview != null) {
+            texturePreview.setVisibility(cv ? View.GONE : View.VISIBLE);
+        }
+        if (countSurface != null) {
+            countSurface.setVisibility(cv ? View.VISIBLE : View.GONE);
+        }
+        if (countRoiOverlay != null && !cv) {
+            countRoiOverlay.setVisibility(View.GONE);
+        }
+        if (countOcvGridScroll != null) {
+            countOcvGridScroll.setVisibility(cv ? View.VISIBLE : View.GONE);
+        }
+        if (roiPanel != null) {
+            if (cv) {
+                roiPanel.setVisibility(View.GONE);
+            } else {
+                roiPanel.setVisibility(roiPanelVisible ? View.VISIBLE : View.GONE);
+            }
+        }
+        if (btnCrop != null) {
+            btnCrop.setVisibility(cv ? View.GONE : View.VISIBLE);
+        }
+        if (!cv && openCvHelper != null) {
+            currentCameraId = openCvHelper.getCurrentCameraId();
+        }
+    }
+
+    @Nullable
+    private static TrayCountingHelper.BoxLayout layoutForOcvGridId(int checkedId) {
+        if (checkedId == R.id.count_ocv_grid_2x2) return TrayCountingHelper.BoxLayout.GRID_2x2;
+        if (checkedId == R.id.count_ocv_grid_3x3) return TrayCountingHelper.BoxLayout.GRID_3x3;
+        if (checkedId == R.id.count_ocv_grid_4x4) return TrayCountingHelper.BoxLayout.GRID_4x4;
+        if (checkedId == R.id.count_ocv_grid_2x3) return TrayCountingHelper.BoxLayout.GRID_2x3;
+        return null;
+    }
 
     private final List<Button> indexButtons = new java.util.ArrayList<>();
 
@@ -211,6 +272,59 @@ public class CountFragment extends Fragment implements TextureView.SurfaceTextur
             @Override public void onStopTrackingTouch(SeekBar s) { applySensitivity(); }
         };
         if (seekSens != null) seekSens.setOnSeekBarChangeListener(sensListener);
+
+        countEngineSpinner = v.findViewById(R.id.count_engine_spinner);
+        countSurface = v.findViewById(R.id.count_surface);
+        countRoiOverlay = v.findViewById(R.id.count_roi_overlay);
+        countOcvGridScroll = v.findViewById(R.id.count_ocv_grid_scroll);
+        countOcvGridGroup = v.findViewById(R.id.count_ocv_grid_group);
+
+        openCvHelper = new OpenCvTrayCountHelper(this, "TrayCountOpenCV", REQ_CAMERA_OPENCV);
+        openCvHelper.bindViews(v);
+
+        if (countEngineSpinner != null) {
+            ArrayAdapter<String> ad = new ArrayAdapter<>(requireContext(),
+                    android.R.layout.simple_spinner_item,
+                    java.util.Arrays.asList(
+                            getString(R.string.count_engine_ncnn),
+                            getString(R.string.count_engine_opencv)));
+            ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            countEngineSpinner.setAdapter(ad);
+            suppressEngineSpinner = true;
+            countEngineSpinner.setSelection(ENGINE_NCNN);
+            suppressEngineSpinner = false;
+            countEngineSpinner.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(android.widget.AdapterView<?> parent, View view, int position, long id) {
+                    if (suppressEngineSpinner) return;
+                    boolean busy = previewing || (openCvHelper != null && openCvHelper.isPreviewing());
+                    if (busy) {
+                        Toast.makeText(requireContext(), R.string.count_engine_switch_hint, Toast.LENGTH_SHORT).show();
+                        suppressEngineSpinner = true;
+                        parent.setSelection(lastEngineSelection);
+                        suppressEngineSpinner = false;
+                        return;
+                    }
+                    lastEngineSelection = position;
+                    applyEngineUi();
+                }
+
+                @Override
+                public void onNothingSelected(android.widget.AdapterView<?> parent) {
+                }
+            });
+        }
+
+        if (countOcvGridGroup != null) {
+            countOcvGridGroup.setOnCheckedChangeListener((group, checkedId) -> {
+                TrayCountingHelper.BoxLayout layout = layoutForOcvGridId(checkedId);
+                if (layout != null && openCvHelper != null) {
+                    openCvHelper.setUniformSlotLayout(layout);
+                }
+            });
+        }
+
+        applyEngineUi();
 
         cameraCount = Math.max(1, Camera.getNumberOfCameras());
         rebuildIndexButtons();
@@ -345,9 +459,11 @@ public class CountFragment extends Fragment implements TextureView.SurfaceTextur
     }
 
     private void highlightActiveIndex() {
+        int activeCam = (isOpenCvEngine() && openCvHelper != null)
+                ? openCvHelper.getCurrentCameraId() : currentCameraId;
         for (int i = 0; i < indexButtons.size(); i++) {
             Button b = indexButtons.get(i);
-            if (i == currentCameraId && previewing) {
+            if (i == activeCam && (previewing || (openCvHelper != null && openCvHelper.isPreviewing()))) {
                 b.setBackgroundColor(Color.parseColor("#F59E0B"));
                 b.setTextColor(Color.BLACK);
             } else {
@@ -358,6 +474,13 @@ public class CountFragment extends Fragment implements TextureView.SurfaceTextur
     }
 
     private void onSelectCamera(int index) {
+        if (isOpenCvEngine()) {
+            if (openCvHelper != null) {
+                openCvHelper.selectTrayCamera(index);
+            }
+            highlightActiveIndex();
+            return;
+        }
         if (index == currentCameraId && previewing) return;
         currentCameraId = index;
         lastCount = -1;
@@ -389,6 +512,7 @@ public class CountFragment extends Fragment implements TextureView.SurfaceTextur
     private void openCameraAfterSettle(int session, int index) {
         pendingCameraSwitch = null;
         if (session != cameraSession || !startRequested || !isAdded()) return;
+        if (isOpenCvEngine()) return;
         if (texturePreview == null || texturePreview.getSurfaceTexture() == null) {
             statusText.setText("Waiting for preview surface…");
             return;
@@ -419,6 +543,10 @@ public class CountFragment extends Fragment implements TextureView.SurfaceTextur
             plateCounter.close();
             plateCounter = null;
         }
+        if (openCvHelper != null) {
+            openCvHelper.destroy();
+            openCvHelper = null;
+        }
         super.onDestroyView();
     }
 
@@ -427,23 +555,37 @@ public class CountFragment extends Fragment implements TextureView.SurfaceTextur
     private void requestStart() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQ_CAMERA);
+            requestPermissions(new String[]{Manifest.permission.CAMERA},
+                    isOpenCvEngine() ? REQ_CAMERA_OPENCV : REQ_CAMERA);
             return;
         }
         startRequested = true;
-        if (surfaceReady) startPreview();
+        if (isOpenCvEngine()) {
+            if (openCvHelper != null) {
+                openCvHelper.userRequestStart();
+            }
+            return;
+        }
+        if (surfaceReady) startNcnnPreview();
         else statusText.setText("Waiting for preview surface…");
     }
 
     @Override
     public void onRequestPermissionsResult(int rc, @NonNull String[] perms, @NonNull int[] grants) {
+        if (rc == REQ_CAMERA_OPENCV) {
+            if (openCvHelper != null) {
+                openCvHelper.onRequestPermissionsResult(rc, perms, grants);
+            }
+            return;
+        }
         if (rc == REQ_CAMERA) {
             if (grants.length > 0 && grants[0] == PackageManager.PERMISSION_GRANTED) requestStart();
             else Toast.makeText(requireContext(), R.string.cam_no_permission, Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void startPreview() {
+    private void startNcnnPreview() {
+        if (isOpenCvEngine()) return;
         if (previewing) return;
         if (texturePreview == null || texturePreview.getSurfaceTexture() == null) return;
         int exposed = Math.min(cameraCount, TRAY_CAMERA_COUNT);
@@ -479,6 +621,7 @@ public class CountFragment extends Fragment implements TextureView.SurfaceTextur
      * Uses {@link TextureView} + {@link Camera#setPreviewTexture} so preview callbacks work on RK3288.
      */
     private boolean tryStartPreviewOnCamera(int camId) {
+        if (isOpenCvEngine()) return false;
         if (camId < 0 || camId >= Camera.getNumberOfCameras()) return false;
         if (texturePreview == null) return false;
         SurfaceTexture surfaceTexture = texturePreview.getSurfaceTexture();
@@ -595,6 +738,14 @@ public class CountFragment extends Fragment implements TextureView.SurfaceTextur
     }
 
     private void stopPreview() {
+        if (isOpenCvEngine() && openCvHelper != null) {
+            startRequested = false;
+            cancelPendingCameraSwitch();
+            cameraSession++;
+            openCvHelper.userStopPreview();
+            highlightActiveIndex();
+            return;
+        }
         startRequested = false;
         cancelPendingCameraSwitch();
         cameraSession++;
@@ -609,7 +760,7 @@ public class CountFragment extends Fragment implements TextureView.SurfaceTextur
 
     /** Release Camera1 handle only — used during index switch before HAL settle delay. */
     private void releaseCameraHardware() {
-        if (texturePreview != null) {
+        if (texturePreview != null && !isOpenCvEngine()) {
             texturePreview.setVisibility(View.VISIBLE);
         }
         if (camera != null) {
@@ -756,12 +907,14 @@ public class CountFragment extends Fragment implements TextureView.SurfaceTextur
 
     @Override
     public void onSurfaceTextureAvailable(@NonNull SurfaceTexture surface, int width, int height) {
+        if (isOpenCvEngine()) return;
         surfaceReady = true;
-        if (startRequested && !previewing) startPreview();
+        if (startRequested && !previewing) startNcnnPreview();
     }
 
     @Override
     public void onSurfaceTextureSizeChanged(@NonNull SurfaceTexture surface, int width, int height) {
+        if (isOpenCvEngine()) return;
         if (camera == null) return;
         try {
             camera.stopPreview();

@@ -255,6 +255,52 @@ public class SensorDataManager {
         return rosSafetyStatus;
     }
 
+    /**
+     * Ensures CoAP sensor topics and (when available) rosbridge safety topics are live.
+     * Call before robot rotation during customer-feedback flows (Count3 / YOLO pickup).
+     */
+    public synchronized void ensureSafetyMonitoring() {
+        if (!isInitialized) {
+            init();
+        }
+        setSafetyRosMode(true);
+    }
+
+    /**
+     * True when bump, collision, or close sonar reading says rotation should stop.
+     */
+    public synchronized boolean isMovementBlocked() {
+        long now = SystemClock.elapsedRealtime();
+        if (safetyRosMode && latestRosSafety != null && (now - latestRosSafetyMs) < 2500L) {
+            RosSafetyBridge.Snapshot s = latestRosSafety;
+            if (s.collision || s.bumped || s.bumpActiveCount > 0) {
+                return true;
+            }
+            if (Double.isFinite(s.sonarMinM) && s.sonarMinM > 0.05 && s.sonarMinM < 0.40) {
+                return true;
+            }
+        }
+        try {
+            JSONObject col = getPayloadData(latestCollision);
+            if (col != null
+                    && (col.optBoolean("collision", false) || col.optBoolean("isCollision", false))) {
+                return true;
+            }
+            JSONObject sonar = getPayloadData(latestSonar);
+            if (sonar != null) {
+                Object d = sonar.opt("distance");
+                if (d instanceof Number) {
+                    double m = ((Number) d).doubleValue();
+                    if (m > 0.05 && m < 0.40) {
+                        return true;
+                    }
+                }
+            }
+        } catch (Exception ignored) {
+        }
+        return false;
+    }
+
     public void addListener(SensorDataListener listener) {
         if (listener != null) {
             listeners.add(listener);

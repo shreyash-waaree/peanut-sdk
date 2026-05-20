@@ -2,9 +2,9 @@ package com.keenon.peanut.supermarket.yolo;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import com.keenon.sdk.base.model.KNBox;
 import com.keenon.sdk.yolo.KNYoloExecutor;
@@ -56,14 +56,16 @@ public final class HandDetectorHelper {
     /** Single detected hand. */
     public static final class Result {
         public final float score;
-        /** Normalised centre-x of the bounding box (0=left edge, 1=right edge). */
+        /** Normalised centre (0=left/top edge, 1=right/bottom edge). */
         public final float centerX;
+        public final float centerY;
         public final float x1, y1, x2, y2;
 
         Result(float score, float x1, float y1, float x2, float y2) {
             this.score   = score;
             this.x1 = x1; this.y1 = y1; this.x2 = x2; this.y2 = y2;
             this.centerX = (x1 + x2) / 2f;
+            this.centerY = (y1 + y2) / 2f;
         }
     }
 
@@ -88,9 +90,11 @@ public final class HandDetectorHelper {
         try {
             paramPath = copyAssetToFiles(PARAM_ASSET);
             binPath   = copyAssetToFiles(BIN_ASSET);
-            executor  = new KNYoloExecutor();
-            executor.init(MODEL_SIZE);
-            executor.initModel(MODEL_TYPE, paramPath, binPath);
+            synchronized (NcnnGate.LOCK) {
+                executor = new KNYoloExecutor();
+                executor.init(MODEL_SIZE);
+                executor.initModel(MODEL_TYPE, paramPath, binPath);
+            }
             initialized = true;
             Log.i(TAG, "hand_detect model ready — " + paramPath);
             return true;
@@ -114,18 +118,29 @@ public final class HandDetectorHelper {
     public synchronized List<Result> detect(byte[] jpeg, int srcWidth, int srcHeight) {
         if (!initialized || executor == null) return Collections.emptyList();
         if (jpeg == null || jpeg.length < 4) return Collections.emptyList();
-        if (!isLikelyJpeg(jpeg)) return Collections.emptyList();
+        if (!NcnnModelJpeg.isLikelyJpeg(jpeg) && !NcnnModelJpeg.isJpegDecodable(jpeg)) {
+            return Collections.emptyList();
+        }
 
-        byte[] canonical = canonicalizeJpeg(jpeg);
-        if (canonical == null || !isLikelyJpeg(canonical)) return Collections.emptyList();
+        byte[] modelJpeg = NcnnModelJpeg.forModelInput(jpeg);
+        if (modelJpeg == null) {
+            Log.w(TAG, "detect: skip — could not build " + MODEL_W + "x" + MODEL_H + " JPEG");
+            return Collections.emptyList();
+        }
 
         try {
-            KNBox[] boxes = executor.detectData(
-                    MODEL_TYPE, canonical, canonical.length,
-                    CONF_THRESH,
-                    paramPath, binPath,
-                    INPUT_TAG, INPUT_ID, EXTRACT_TAG,
-                    srcWidth, srcHeight, MODEL_W, MODEL_H);
+            final KNBox[] boxes;
+            synchronized (NcnnGate.LOCK) {
+                boxes = executor.detectData(
+                        MODEL_TYPE, modelJpeg, modelJpeg.length,
+                        CONF_THRESH,
+                        paramPath, binPath,
+                        INPUT_TAG, INPUT_ID, EXTRACT_TAG,
+                        NcnnModelJpeg.JNI_SRC_W,
+                        NcnnModelJpeg.JNI_SRC_H,
+                        NcnnModelJpeg.MODEL_W,
+                        NcnnModelJpeg.MODEL_H);
+            }
 
             if (boxes == null || boxes.length == 0) return Collections.emptyList();
 
@@ -163,41 +178,34 @@ public final class HandDetectorHelper {
      * 0.0 = far left, 1.0 = far right.
      */
     public synchronized float detectCenterX(byte[] jpeg, int srcWidth, int srcHeight) {
+        float[] xy = detectCenterXY(jpeg, srcWidth, srcHeight);
+        return xy != null ? xy[0] : -1f;
+    }
+
+    /**
+     * Normalised centre of the highest-confidence hand, or {@code null} if none.
+     * {@code [0]=centerX}, {@code [1]=centerY}.
+     */
+    @Nullable
+    public synchronized float[] detectCenterXY(byte[] jpeg, int srcWidth, int srcHeight) {
         List<Result> results = detect(jpeg, srcWidth, srcHeight);
-        if (results.isEmpty()) return -1f;
+        if (results.isEmpty()) return null;
         Result best = results.get(0);
         for (Result r : results) {
             if (r.score > best.score) best = r;
         }
-        return best.centerX;
+        return new float[] {best.centerX, best.centerY};
     }
 
     public synchronized void close() {
         if (initialized && executor != null) {
-            try { executor.destroyModel(); } catch (Throwable ignored) {}
+            try {
+                synchronized (NcnnGate.LOCK) {
+                    executor.destroyModel();
+                }
+            } catch (Throwable ignored) {}
             executor    = null;
             initialized = false;
-        }
-    }
-
-    private static boolean isLikelyJpeg(byte[] b) {
-        return b.length >= 4
-                && b[0] == (byte) 0xFF && b[1] == (byte) 0xD8
-                && b[b.length - 2] == (byte) 0xFF && b[b.length - 1] == (byte) 0xD9;
-    }
-
-    private static byte[] canonicalizeJpeg(byte[] jpeg) {
-        Bitmap bmp = null;
-        try {
-            bmp = BitmapFactory.decodeByteArray(jpeg, 0, jpeg.length);
-            if (bmp == null || bmp.getWidth() <= 0) return null;
-            ByteArrayOutputStream out = new ByteArrayOutputStream(jpeg.length);
-            bmp.compress(Bitmap.CompressFormat.JPEG, 85, out);
-            return out.toByteArray();
-        } catch (Throwable t) {
-            return null;
-        } finally {
-            if (bmp != null && !bmp.isRecycled()) bmp.recycle();
         }
     }
 
